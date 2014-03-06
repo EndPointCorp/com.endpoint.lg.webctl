@@ -17,6 +17,7 @@
 package com.endpoint.lg.webctl;
 
 import interactivespaces.activity.impl.web.BaseRoutableRosWebServerActivity;
+import interactivespaces.service.web.server.WebServer;
 import interactivespaces.util.data.json.JsonNavigator;
 import interactivespaces.util.data.json.JsonBuilder;
 
@@ -31,6 +32,7 @@ import com.endpoint.lg.support.message.earthQuery.MessageTypesQuery;
 import com.endpoint.lg.support.domain.streetview.StreetviewPov;
 import com.endpoint.lg.support.domain.streetview.StreetviewPano;
 import com.endpoint.lg.support.viewsync.EarthViewSyncState;
+import com.endpoint.lg.support.web.WebConfigHandler;
 
 /**
  * Provides a websocket interface for manipulating the Liquid Galaxy.
@@ -55,12 +57,16 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
 
   public static final String WS_REFRESH = "Refresh";
 
-  StreetviewPov lastStreetviewPov;
-  StreetviewPano lastStreetviewPano;
-  EarthViewSyncState lastEarthView;
+  public static final String CONFIG_HANDLER_PATH = "is.config.js";
+
+  private StreetviewPov lastStreetviewPov;
+  private StreetviewPano lastStreetviewPano;
+  private EarthViewSyncState lastEarthView;
 
   private WebsocketMessageHandlers websocketHandlers;
   private RosMessageHandlers rosHandlers;
+
+  private WebConfigHandler configHandler;
 
   /**
    * Broadcasts the Earth view state to all websocket clients.
@@ -274,6 +280,24 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
         sendEarthViewChanged();
       }
     });
+  }
+
+  /**
+   * Sets up the <code>WebConfigHandler</code>.
+   */
+  @Override
+  public void onActivityStartup() {
+    WebServer webserver = getWebServer();
+    configHandler = new WebConfigHandler(getConfiguration());
+    webserver.addDynamicContentHandler(CONFIG_HANDLER_PATH, false, configHandler);
+  }
+
+  /**
+   * Update the <code>WebConfigHandler</code> on configuration changes.
+   */
+  @Override
+  public void onActivityConfigurationUpdate(Map<String, Object> update) {
+    configHandler.updateConfig(getConfiguration());
   }
 
   /**

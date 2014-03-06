@@ -35,7 +35,7 @@ LiquidGalaxyApp
    */
   .value('SocketConfig', {
     Host: '127.0.0.1',
-    Port: 8999,
+    Port: Number(IS.Configuration['space.activity.webapp.web.server.port']),
     Channel: '/websocket'
   })
 
