@@ -1,0 +1,11 @@
+<div id="planet" ng-controller="PlanetController">
+  <div ng-class="planet == 'earth' ? 'earth_hl' : 'earth'" ng-click="selectPlanet('earth')">
+    <span ng-class="{selected: selectedPlanet=='earth'}">Earth</span>
+  </div>
+  <div ng-class="planet == 'mars' ? 'mars_hl' : 'mars'" ng-click="selectPlanet('mars')">
+    <span ng-class="{selected: selectedPlanet=='mars'}">Mars</span>
+  </div>
+  <div ng-class="planet == 'moon' ? 'moon_hl' : 'moon'" ng-click="selectPlanet('moon')">
+    <span ng-class="{selected: selectedPlanet=='moon'}">Moon</span>
+  </div>
+</div>

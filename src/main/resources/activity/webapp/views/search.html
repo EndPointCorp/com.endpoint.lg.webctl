@@ -1,0 +1,5 @@
+<form id="search" ng-submit="doSearch(searchQuery)" ng-controller="SearchController" ng-show="checkVisibility()">
+  <input id="searchInput" ng-model="searchQuery" ng-focus="focusEvent()" />
+  <button type="submit" class="submit"></button>
+  <button type="reset" class="clear" ng-click="clear()">X</button>
+</form>

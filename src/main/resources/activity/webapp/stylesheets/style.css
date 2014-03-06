@@ -1,0 +1,331 @@
+/* one-off class for preloading images */
+.preload-images {
+  display: none;
+  background: url('../images/bluelayer_earth.png') no-repeat -9999px -9999px,
+    url('../images/bluelayer_exo.png') no-repeat -9999px -9999px,
+    url('../images/star_bg.png') no-repeat -9999px -9999px,
+    url('../images/indoor.png') no-repeat -9999px -9999px,
+    url('../images/outdoor.png') no-repeat -9999px -9999px,
+    url('../images/ocean.png') no-repeat -9999px -9999px,
+    url('../images/street.png') no-repeat -9999px -9999px,
+    url('../images/search.png') no-repeat -9999px -9999px,
+    url('../images/mode_earth.png') no-repeat -9999px -9999px,
+    url('../images/mode_earth_hl.png') no-repeat -9999px -9999px,
+    url('../images/mode_streetview.png') no-repeat -9999px -9999px,
+    url('../images/mode_streetview_hl.png') no-repeat -9999px -9999px,
+    url('../images/planet_earth.png') no-repeat -9999px -9999px,
+    url('../images/planet_earth_hl.png') no-repeat -9999px -9999px,
+    url('../images/planet_moon.png') no-repeat -9999px -9999px,
+    url('../images/planet_moon_hl.png') no-repeat -9999px -9999px,
+    url('../images/planet_mars.png') no-repeat -9999px -9999px,
+    url('../images/planet_mars_hl.png') no-repeat -9999px -9999px;
+}
+
+/* override Angular's hide class for opacity transitions */
+.ng-hide {
+  display:block!important;
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 0.25s ease-out;
+}
+
+@font-face {
+  font-family: OpenSans;
+  src: url('../fonts/opensans_regular.ttf');
+}
+
+html body {
+  margin: 0px;
+  padding: 0px;
+  color: #FFFFFF;
+  font-family: OpenSans;
+  font-size: 1.1em;
+  overflow: hidden;
+}
+
+#bluelayer>div {
+  position: absolute;
+  z-index: 2;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  transition: all 0.25s ease-out;
+}
+
+#bluelayer>.earth {
+  width: 755px;
+  background-image: url('../images/bluelayer_earth.png');
+}
+
+#bluelayer>.moon, #bluelayer>.mars {
+  width: 1125px;
+  background-image: url('../images/bluelayer_exo.png');
+}
+
+#splash {
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: url('../images/star_bg.png') repeat;
+}
+
+#splash>div {
+  position: absolute;
+  z-index: 2;
+  top: 180px;
+  left: 1050px;
+  width: 700px;
+  height: 700px;
+  background-size: cover;
+  transition: all 0.25s ease-out;
+}
+
+#splash .splash_earth {
+  opacity: 0;
+}
+
+#splash .splash_moon {
+  background-image: url('../images/planet_moon.png');
+}
+
+#splash .splash_mars {
+  background-image: url('../images/planet_mars.png');
+}
+
+#poi {
+  position: absolute;
+  z-index: 3;
+  /*
+  top: 95px;
+  */
+  bottom: 115px;
+  left: 10px;
+}
+
+#poi>ul {
+  margin: 0px;
+  padding: 0px;
+  transition: margin-left 0.25s ease-out;
+}
+
+#poi>ul.mars {
+  margin-left: 131px;
+}
+
+#poi>ul.moon {
+  margin-left: 262px;
+}
+
+#poi>ul>li {
+  height: 72px;
+  line-height: 72px;
+  width: 300px;
+  padding-left: 75px;
+  margin-bottom: 15px;
+  list-style: none;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+#poi>ul>li>span {
+  display: inline-block;
+  line-height: normal;
+  vertical-align: middle;
+  cursor: default;
+  -webkit-user-select: none;
+  transition: text-shadow 0.25s ease-out;
+}
+
+#poi>ul>li>span.selected {
+  text-shadow: 0 0 12px #00FFFF;
+}
+
+.curve0, .curve9 {
+  margin-left: 125px;
+}
+
+.curve1, .curve8 {
+  margin-left: 72px;
+}
+
+.curve2, .curve7 {
+  margin-left: 35px;
+}
+
+.curve3, .curve6 {
+  margin-left: 15px;
+}
+
+.curve4, .curve5 {
+  margin-left: 5px;
+}
+
+.indoor {
+  background-image: url('../images/indoor.png');
+}
+
+.outdoor {
+  background-image: url('../images/outdoor.png');
+}
+
+.ocean {
+  background-image: url('../images/ocean.png');
+}
+
+.street {
+  background-image: url('../images/street.png');
+}
+
+#search {
+  position: absolute;
+  z-index: 3;
+  top: 20px;
+  left: 200px;
+  width: 330px;
+  height: 63px;
+  background: url('../images/search.png') no-repeat;
+  transition: opacity 0.25s ease-out;
+}
+
+#search>.submit {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  width: 45px;
+  height: 55px;
+}
+
+#search>.clear {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  width: 35px;
+  height: 50px;
+}
+
+#search>button, #search>span {
+  background: transparent;
+  border: none !important;
+  outline: none !important;
+  color: #FFFFFF;
+  font-family: OpenSans;
+  font-size: 22pt;
+}
+
+#search>input {
+  position: absolute;
+  top: 4px;
+  left: 70px;
+  height: 50px;
+  width: 208px;
+  margin: 0px;
+  padding: 0px;
+  background: transparent;
+  border: none !important;
+  outline: none !important;
+  color: #FFFFFF;
+  font-family: OpenSans;
+  font-size: 22pt;
+}
+
+#map {
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  width: 125%;
+  height: 100%;
+  transition: opacity 0.25s ease-out;
+}
+
+#mode {
+  position: absolute;
+  z-index: 2;
+  top: 0px;
+  right: 0px;
+}
+
+#mode>div {
+  background-repeat: no-repeat;
+  height: 205px;
+  width: 205px;
+  transition: background-image 0.25s ease-out;
+}
+
+#mode>.earth {
+  background-image: url('../images/mode_earth.png');
+}
+
+#mode>.streetview {
+  background-image: url('../images/mode_streetview.png');
+}
+
+#mode>.earth_hl {
+  background-image: url('../images/mode_earth_hl.png');
+}
+
+#mode>.streetview_hl {
+  background-image: url('../images/mode_streetview_hl.png');
+}
+
+#planet {
+  position: absolute;
+  z-index: 2;
+  bottom: 33px;
+  left: 160px;
+}
+
+#planet>div {
+  display: inline-block;
+  width: 91px;
+  height: 91px;
+  margin-left: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 87px 87px;
+  transition: background-image 0.25s ease-out;
+}
+
+#planet>div>span {
+  position: absolute;
+  bottom: -18px;
+  width: 91px;
+  text-align: center;
+  font-size: 1.15em;
+  -webkit-user-select: none;
+  transition: text-shadow 0.25s ease-out;
+}
+
+#planet>div>span.selected {
+  text-shadow: 0 0 12px #00FFFF;
+}
+
+#planet>.earth {
+  background-image: url('../images/planet_earth.png');
+}
+
+#planet>.moon {
+  background-image: url('../images/planet_moon.png');
+}
+
+#planet>.mars {
+  background-image: url('../images/planet_mars.png');
+}
+
+#planet>.earth_hl {
+  background-image: url('../images/planet_earth_hl.png');
+}
+
+#planet>.moon_hl {
+  background-image: url('../images/planet_moon_hl.png');
+}
+
+#planet>.mars_hl {
+  background-image: url('../images/planet_mars_hl.png');
+}

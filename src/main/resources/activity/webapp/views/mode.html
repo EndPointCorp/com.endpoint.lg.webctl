@@ -1,0 +1,4 @@
+<div id="mode" ng-controller="ModeController" ng-show="checkVisibility()">
+  <div ng-class="mode == 'earth' ? 'earth_hl' : 'earth'" ng-click="selectMode('earth')"></div>
+  <div ng-class="mode == 'streetview' ? 'streetview_hl' : 'streetview'" ng-click="selectMode('streetview')"></div>
+</div>

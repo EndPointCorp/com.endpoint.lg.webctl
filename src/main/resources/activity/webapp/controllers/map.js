@@ -1,0 +1,159 @@
+/**
+ * A Controller for the map.
+ */
+function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps, Modes, Planets, Messages, UIEvents) {
+  $scope.map = null;
+  $scope.svCoverageLayer = new google.maps.StreetViewCoverageLayer();
+  $scope.svSvc = new google.maps.StreetViewService();
+  $scope.canvas = document.getElementById('map');
+  $scope.streetView = false;
+  $scope.coverage = false;
+  $scope.mapTakeover = false;
+  $scope.mapTakeoverTimeout = null;
+
+  /**
+   * Instantiate the map.
+   */
+  $scope.map = new google.maps.Map(
+    $scope.canvas,
+    {
+      zoom: 8,
+      disableDefaultUI: true,
+      styles: MapStyles,
+      center: new google.maps.LatLng(-34.397, 150.644)
+    }
+  );
+
+  /**
+   * Broadcast zoom changes.
+   */
+  google.maps.event.addListener($scope.map, 'zoom_changed', function() {
+    $rootScope.$broadcast(UIEvents.Map.ZoomChanged, $scope.map.getZoom());
+    $scope.checkCoverage();
+  });
+
+  /**
+   * Handle map clicks.
+   */
+  google.maps.event.addListener($scope.map, 'click', function(ev) {
+    if (!$scope.coverage) return;
+
+    $scope.svSvc.getPanoramaByLocation(
+      ev.latLng,
+      MapConfig.MapClickSearchRadius,
+      function(data, stat) {
+        if (stat == google.maps.StreetViewStatus.OK) {
+          $rootScope.$broadcast(UIEvents.Map.SelectPano, data);
+        }
+      }
+    );
+  });
+
+  /**
+   * Disable Earth view sync when the map is drug.
+   */
+  google.maps.event.addListener($scope.map, 'dragstart', function() {
+    $timeout.cancel($scope.mapTakeoverTimeout);
+
+    if ($scope.activeApp == Apps.Earth) {
+      $scope.mapTakeover = true;
+    }
+  });
+
+  /**
+   * Resume Earth view sync when map drag is over.
+   */
+  google.maps.event.addListener($scope.map, 'dragend', function() {
+    $scope.mapTakeoverTimeout = $timeout(function() {
+      $scope.mapTakeover = false;
+    }, 2000);
+  });
+
+  /**
+   * Shows the Street View coverage layer.
+   */
+  $scope.showCoverage = function() {
+    if ($scope.coverage) return;
+
+    $scope.coverage = true;
+    $scope.svCoverageLayer.setMap($scope.map);
+  }
+
+  /**
+   * Hides the Street View coverage layer.
+   */
+  $scope.hideCoverage = function() {
+    if (!$scope.coverage) return;
+
+    $scope.coverage = false;
+    $scope.svCoverageLayer.setMap(null);
+  }
+
+  /**
+   * Updates the Street View coverage layer's visibility.
+   */
+  $scope.checkCoverage = function() {
+    if ($scope.map.getZoom() >= MapConfig.MinStreetViewZoomLevel && $scope.streetView && $scope.checkVisibility()) {
+      $scope.showCoverage();
+    } else {
+      $scope.hideCoverage();
+    }
+  }
+
+  /**
+   * Handle UI mode changes.
+   */
+  $scope.$on(UIEvents.Mode.SelectMode, function($event, mode) {
+    $scope.streetView = (mode == Modes.StreetView);
+    $scope.checkCoverage();
+  });
+
+  /**
+   * Returns true if the map canvas should be visible.
+   *
+   * This method may also need to manipulate the map to prevent glitches.
+   */
+  $scope.checkVisibility = function() {
+    var visibility = ($scope.planet == Planets.Earth && !$scope.searching);
+    /*
+    // this might prevent map canvas glitches
+    if (visibility) {
+      google.maps.event.trigger($scope.map, 'resize');
+    }
+    */
+    return visibility;
+  }
+
+  /**
+   * Handle Earth view changes.
+   */
+  $scope.$on(Messages.Earth.ViewChanged, function($event, viewsyncData) {
+    if ($scope.activeApp != Apps.Earth || $scope.mapTakeover) return;
+
+    var altitude = viewsyncData.altitude;
+    altitude = Math.log(Math.max(altitude - MapConfig.EarthAltitudeMin, MapConfig.EarthAltitudeMin));
+
+    var EarthAltitudeMinLog = Math.log(MapConfig.EarthAltitudeMin);
+    var EarthAltitudeMaxLog = Math.log(MapConfig.EarthAltitudeMax);
+
+    var zoom = (EarthAltitudeMaxLog - altitude) / ((EarthAltitudeMaxLog - EarthAltitudeMinLog) / (MapConfig.MapZoomMax - MapConfig.MapZoomMin)) + MapConfig.MapZoomMin;
+    zoom -= zoom % 1;
+    zoom = Math.min(Math.max(zoom + MapConfig.MapZoomFudge, MapConfig.MapZoomMin), MapConfig.MapZoomMax);
+    $scope.map.setZoom(zoom);
+
+    var latLng = new google.maps.LatLng(viewsyncData.latitude, viewsyncData.longitude);
+    $scope.map.panTo(latLng);
+  });
+
+  /**
+   * Handle Street View pano changes.
+   */
+  $scope.$on(Messages.StreetView.PanoChanged, function($event, pano) {
+    $scope.svSvc.getPanoramaById(pano.panoid, function(data, stat) {
+      if (stat == google.maps.StreetViewStatus.OK) {
+        $scope.map.panTo(data.location.latLng);
+        $scope.map.setZoom(Math.max(MapConfig.MinStreetViewZoomLevel, $scope.map.getZoom()));
+      }
+    })
+  })
+}
