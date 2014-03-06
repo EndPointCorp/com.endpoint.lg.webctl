@@ -50,23 +50,47 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
   });
 
   /**
-   * Disable Earth view sync when the map is drug.
+   * Disable Earth view sync.
    */
-  google.maps.event.addListener($scope.map, 'dragstart', function() {
+  $scope.startTakeover = function() {
     $timeout.cancel($scope.mapTakeoverTimeout);
 
     if ($scope.activeApp == Apps.Earth) {
       $scope.mapTakeover = true;
     }
-  });
+  }
 
   /**
-   * Resume Earth view sync when map drag is over.
+   * Schedule resume of Earth view sync.
    */
-  google.maps.event.addListener($scope.map, 'dragend', function() {
+  $scope.endTakeoverSchedule = function() {
+    $timeout.cancel($scope.mapTakeoverTimeout);
+
     $scope.mapTakeoverTimeout = $timeout(function() {
       $scope.mapTakeover = false;
     }, 2000);
+  }
+
+  /**
+   * Suspend Earth view sync on map drags.
+   */
+  google.maps.event.addListener($scope.map, 'dragstart', function() {
+    $scope.startTakeover();
+  });
+
+  /**
+   * Suspend Earth view sync on map clicks.
+   */
+  google.maps.event.addListener($scope.map, 'click', function() {
+    $scope.startTakeover();
+    $scope.endTakeoverSchedule();
+  })
+
+  /**
+   * Resume Earth view sync when map drags finish.
+   */
+  google.maps.event.addListener($scope.map, 'dragend', function() {
+    $scope.endTakeoverSchedule();
   });
 
   /**
