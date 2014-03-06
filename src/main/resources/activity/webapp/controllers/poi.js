@@ -32,7 +32,7 @@ function PoiController($scope, $rootScope, $sanitize, PoiContent, UIEvents) {
    * Handlers for clearing the selection on external UI events.
    */
   $rootScope.$on(UIEvents.Mode.SelectMode, $scope.selectNone);
-  $rootScope.$on('Search.query', $scope.selectNone);
+  $rootScope.$on(UIEvents.Search.Query, $scope.selectNone);
 
   /**
    * Handler for planet changes, causing new content to be loaded.
