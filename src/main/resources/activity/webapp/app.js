@@ -142,6 +142,22 @@ LiquidGalaxyApp
     },
   ])
 
+  .value('QueryMessageFields', {
+    Planet: {
+      Destination: 'destination'
+    },
+    Search: {
+      Query: 'query'
+    }
+  })
+
+  .value('FlyToMessageFields', {
+    Type: 'type',
+    Location: 'location',
+    Altitude: 'altitude',
+    Orientation: 'orientation'
+  })
+
   /**
    * Points of Interest for each planet.
    */

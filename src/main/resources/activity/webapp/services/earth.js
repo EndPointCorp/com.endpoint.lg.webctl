@@ -1,7 +1,7 @@
 /**
  * A Service for interactions with the Earth activity group.
  */
-LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService, Messages) {
+LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService, Messages, QueryMessageFields) {
 
   /**
    * Handle view changes from Earth by broadcasting into the root scope.
@@ -40,7 +40,11 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService, Mess
    */
   function setPlanet(planetName) {
     console.debug(Messages.Earth.SetPlanet);
-    SocketService.emit(Messages.Earth.SetPlanet, { planet: planetName });
+
+    var message = {};
+    message[QueryMessageFields.Planet.Destination] = planetName;
+
+    SocketService.emit(Messages.Earth.SetPlanet, message);
   }
 
   /**
@@ -48,7 +52,11 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService, Mess
    */
   function search(query) {
     console.debug(Messages.Earth.Search);
-    SocketService.emit(Messages.Earth.Search, { query: query });
+
+    var message = {};
+    message[QueryMessageFields.Search.Query] = query;
+
+    SocketService.emit(Messages.Earth.Search, message);
   }
 
   return {

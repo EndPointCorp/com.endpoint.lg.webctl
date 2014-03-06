@@ -27,6 +27,7 @@ import com.endpoint.lg.support.message.WebsocketMessageHandler;
 import com.endpoint.lg.support.message.RosMessageHandlers;
 import com.endpoint.lg.support.message.RosMessageHandler;
 import com.endpoint.lg.support.message.MessageWrapper;
+import com.endpoint.lg.support.message.earthQuery.MessageTypesQuery;
 import com.endpoint.lg.support.domain.streetview.StreetviewPov;
 import com.endpoint.lg.support.domain.streetview.StreetviewPano;
 import com.endpoint.lg.support.viewsync.EarthViewSyncState;
@@ -68,7 +69,7 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
     getLog().info("sendEarthViewChanged");
     if (lastEarthView == null)
       return;
-    
+
     getLog().info("sending: " + lastEarthView.getMap().toString());
 
     JsonBuilder json =
@@ -101,6 +102,13 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
         MessageWrapper.newTypedMessage(WS_STREETVIEW_POV_CHANGED, lastStreetviewPov.getMap());
 
     sendAllWebSocketJsonBuilder(json);
+  }
+
+  /**
+   * Sends a query to Earth's query interface.
+   */
+  private void sendQuery(JsonBuilder message) {
+    sendOutputJsonBuilder("query", message);
   }
 
   /**
@@ -141,6 +149,12 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
     websocketHandlers.registerHandler(WS_EARTH_SET_VIEW, new WebsocketMessageHandler() {
       public void handleMessage(String connectionId, JsonNavigator json) {
         getLog().info(WS_EARTH_SET_VIEW);
+
+        JsonBuilder message =
+            MessageWrapper.newTypedMessage(MessageTypesQuery.MESSAGE_TYPE_QUERYFILE_FLYTO,
+                json.getCurrentItem());
+
+        sendQuery(message);
       }
     });
 
@@ -150,6 +164,12 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
     websocketHandlers.registerHandler(WS_EARTH_SET_PLANET, new WebsocketMessageHandler() {
       public void handleMessage(String connectionId, JsonNavigator json) {
         getLog().info(WS_EARTH_SET_PLANET);
+
+        JsonBuilder message =
+            MessageWrapper.newTypedMessage(MessageTypesQuery.MESSAGE_TYPE_QUERYFILE_PLANET,
+                json.getCurrentItem());
+
+        sendQuery(message);
       }
     });
 
@@ -159,6 +179,12 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
     websocketHandlers.registerHandler(WS_EARTH_SEARCH, new WebsocketMessageHandler() {
       public void handleMessage(String connectionId, JsonNavigator json) {
         getLog().info(WS_EARTH_SEARCH);
+
+        JsonBuilder message =
+            MessageWrapper.newTypedMessage(MessageTypesQuery.MESSAGE_TYPE_QUERYFILE_SEARCH,
+                json.getCurrentItem());
+
+        sendQuery(message);
       }
     });
 
