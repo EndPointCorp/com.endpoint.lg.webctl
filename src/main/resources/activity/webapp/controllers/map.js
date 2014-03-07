@@ -5,8 +5,8 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
   $scope.map = null;
   $scope.svCoverageLayer = new google.maps.StreetViewCoverageLayer();
   $scope.svSvc = new google.maps.StreetViewService();
-  $scope.canvas = document.getElementById('map');
   $scope.streetView = false;
+  $scope.canvas = document.getElementById('map');
   $scope.coverage = false;
   $scope.mapTakeover = false;
   $scope.mapTakeoverTimeout = null;
@@ -25,6 +25,37 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
   );
 
   /**
+   * Instantiate the Street View location marker.
+   * TODO: make marker visibility logic less terribly scattered
+   */
+  $scope.svMarker = new google.maps.Marker({
+    position: MapConfig.DefaultCenter,
+    title: 'Street View',
+    icon: 'images/sv_sprite.png',
+    clickable: false
+  });
+
+  /**
+   * Show the Street View location marker when appropriate.
+   */
+  $scope.$watch('streetView', function(streetView) {
+    if (streetView) {
+      $scope.svMarker.setMap($scope.map);
+    } else {
+      $scope.svMarker.setMap(null);
+    }
+  });
+
+  /**
+   * Move the Street View location marker when the pano changes.
+   */
+  $scope.$watch('panoData', function(panoData) {
+    if (panoData) {
+      $scope.svMarker.setPosition($scope.panoData.location.latLng);
+    }
+  });
+
+  /**
    * Broadcast zoom changes.
    */
   google.maps.event.addListener($scope.map, 'zoom_changed', function() {
@@ -36,6 +67,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    * Handle map clicks.
    */
   google.maps.event.addListener($scope.map, 'click', function(ev) {
+    $scope.clickLatLng = ev.latLng;
     if (!$scope.coverage) return;
 
     $scope.svSvc.getPanoramaByLocation(
@@ -48,32 +80,6 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
       }
     );
   });
-
-  /**
-   * Instantiate the Street View location marker.
-   * TODO: make marker visibility logic less terribly scattered
-   */
-  $scope.svMarker = new google.maps.Marker({
-    position: MapConfig.DefaultCenter,
-    title: 'Street View',
-    icon: 'images/sv_sprite.png',
-    clickable: false
-  });
-
-  /**
-   * Place the Street View location marker.
-   */
-  $scope.setSvMarker = function(latLng) {
-    $scope.svMarker.setPosition(latLng);
-    $scope.svMarker.setMap($scope.map);
-  }
-
-  /**
-   * Hides the Street View location marker.
-   */
-  $scope.hideSvMarker = function() {
-    $scope.svMarker.setMap(null);
-  }
 
   /**
    * Disable Earth view sync.
@@ -155,9 +161,6 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    */
   $scope.$on(UIEvents.Mode.SelectMode, function($event, mode) {
     $scope.streetView = (mode == Modes.StreetView);
-    if (!$scope.streeView) {
-      $scope.hideSvMarker();
-    }
     $scope.checkCoverage();
   });
 
@@ -206,7 +209,6 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
       if (stat == google.maps.StreetViewStatus.OK) {
         $scope.map.panTo(data.location.latLng);
         $scope.map.setZoom(Math.max(MapConfig.MinStreetViewZoomLevel, $scope.map.getZoom()));
-        $scope.setSvMarker(data.location.latLng);
       }
     })
   });

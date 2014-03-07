@@ -11,6 +11,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.planet = Planets.Earth;
   $scope.mode = Modes.Earth;
   $scope.activeApp = Apps.Earth;
+  $scope.panoData = null;
 
   $scope.svSvc = new google.maps.StreetViewService();
 
@@ -86,6 +87,8 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    *          a google.maps.StreetViewPanoramaData object
    */
   $scope.loadPano = function(panoData, heading) {
+    $scope.panoData = panoData;
+
     // TODO: abstract number validation
     if (!isNaN(parseFloat(heading)) && isFinite(heading)) {
       StreetViewService.setPov({heading: heading, pitch: 0});
@@ -225,6 +228,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
       pano.panoid,
       function(panoData, stat) {
         if (stat == google.maps.StreetViewStatus.OK) {
+          $scope.panoData = panoData;
           var earthQuery = $scope.generateEarthQuery(panoData.location.latLng);
           EarthService.setView(earthQuery);
         } else {
