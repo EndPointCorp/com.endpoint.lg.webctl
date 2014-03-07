@@ -6,12 +6,13 @@ LiquidGalaxyApp.service('MasterService', function($http, MasterAPI) {
   /** 
    * Makes a cached HTTP request.
    */
-  function makeRequest(uri, callback) {
+  function makeRequest(uri, callback, cache) {
     callback = callback || null;
+    cache = cache ? true : false;
 
     console.debug('Master.makeRequest', uri);
 
-    $http.get(uri, { cache: false })
+    $http.get(uri, { cache: cache })
 
     .success(function(response, stat) {
       if (response[MasterAPI.Fields.Result] == MasterAPI.Results.Success) {
@@ -59,7 +60,8 @@ LiquidGalaxyApp.service('MasterService', function($http, MasterAPI) {
   function getLiveActivities(callback) {
     makeRequest(
       uri([MasterAPI.Paths.LiveActivity, MasterAPI.Commands.List+'.json'].join('/')),
-      callback
+      callback,
+      true
     );
   }
 
@@ -69,7 +71,8 @@ LiquidGalaxyApp.service('MasterService', function($http, MasterAPI) {
   function getLiveActivityGroups(callback) {
     makeRequest(
       uri([MasterAPI.Paths.LiveActivityGroup, MasterAPI.Commands.List+'.json'].join('/')),
-      callback
+      callback,
+      true
     );
   }
 
