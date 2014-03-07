@@ -209,5 +209,5 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
         $scope.setSvMarker(data.location.latLng);
       }
     })
-  })
+  });
 }
