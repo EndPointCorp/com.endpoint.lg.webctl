@@ -20,6 +20,24 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
   });
 
   /**
+   * Starts up the Street View activity group.
+   */
+  function startup() {
+    console.debug(Messages.StreetView.Startup);
+    //SocketService.emit(Messages.StreetView.Startup);
+    MasterService.startupLiveActivityGroupByName(MasterAPI.Groups.StreetView);
+  }
+
+  /**
+   * Shuts down the Street View activity group.
+   */
+  function shutdown() {
+    console.debug(Messages.StreetView.Shutdown);
+    //SocketService.emit(Messages.StreetView.Shutdown);
+    MasterService.shutdownLiveActivityGroupByName(MasterAPI.Groups.StreetView);
+  }
+
+  /**
    * Activates the Street View activity group.
    */
   function activate() {
@@ -54,6 +72,8 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
   }
 
   return {
+    startup: startup,
+    shutdown: shutdown,
     activate: activate,
     deactivate: deactivate,
     setPano: setPano,

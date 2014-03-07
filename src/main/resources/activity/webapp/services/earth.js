@@ -12,6 +12,24 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService,Maste
   });
 
   /**
+   * Starts up the Earth activity group.
+   */
+  function startup() {
+    console.debug(Messages.Earth.Startup);
+    //SocketService.emit(Messages.Earth.Startup);
+    MasterService.startupLiveActivityGroupByName(MasterAPI.Groups.Earth);
+  }
+
+  /**
+   * Shuts down the Earth activity group.
+   */
+  function shutdown() {
+    console.debug(Messages.Earth.Shutdown);
+    //SocketService.emit(Messages.Earth.Shutdown);
+    MasterService.shutdownLiveActivityGroupByName(MasterAPI.Groups.Earth);
+  }
+
+  /**
    * Activates the Earth activity group.
    */
   function activate() {
@@ -62,6 +80,8 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService,Maste
   }
 
   return {
+    startup: startup,
+    shutdown: shutdown,
     activate: activate,
     deactivate: deactivate,
     setView: setView,

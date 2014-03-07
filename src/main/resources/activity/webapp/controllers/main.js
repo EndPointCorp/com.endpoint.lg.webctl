@@ -15,6 +15,13 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.svSvc = new google.maps.StreetViewService();
 
   /**
+   * Initialize the activities.
+   */
+  EarthService.activate();
+  StreetViewService.startup();
+  StreetViewService.deactivate();
+
+  /**
    * Switches the active App to Earth.
    */
   $scope.switchToEarth = function() {
