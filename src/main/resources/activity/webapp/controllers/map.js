@@ -20,7 +20,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
       zoom: 8,
       disableDefaultUI: true,
       styles: MapStyles,
-      center: new google.maps.LatLng(-34.397, 150.644)
+      center: MapConfig.DefaultCenter
     }
   );
 
@@ -48,6 +48,32 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
       }
     );
   });
+
+  /**
+   * Instantiate the Street View location marker.
+   * TODO: make marker visibility logic less terribly scattered
+   */
+  $scope.svMarker = new google.maps.Marker({
+    position: MapConfig.DefaultCenter,
+    title: 'Street View',
+    icon: 'images/sv_sprite.png',
+    clickable: false
+  });
+
+  /**
+   * Place the Street View location marker.
+   */
+  $scope.setSvMarker = function(latLng) {
+    $scope.svMarker.setPosition(latLng);
+    $scope.svMarker.setMap($scope.map);
+  }
+
+  /**
+   * Hides the Street View location marker.
+   */
+  $scope.hideSvMarker = function() {
+    $scope.svMarker.setMap(null);
+  }
 
   /**
    * Disable Earth view sync.
@@ -129,6 +155,9 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    */
   $scope.$on(UIEvents.Mode.SelectMode, function($event, mode) {
     $scope.streetView = (mode == Modes.StreetView);
+    if (!$scope.streeView) {
+      $scope.hideSvMarker();
+    }
     $scope.checkCoverage();
   });
 
@@ -177,6 +206,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
       if (stat == google.maps.StreetViewStatus.OK) {
         $scope.map.panTo(data.location.latLng);
         $scope.map.setZoom(Math.max(MapConfig.MinStreetViewZoomLevel, $scope.map.getZoom()));
+        $scope.setSvMarker(data.location.latLng);
       }
     })
   })

@@ -79,7 +79,8 @@ LiquidGalaxyApp
     MapClickSearchRadius: 50,
     MapZoomFudge: -1,
     EarthAltitudeMin: 100,
-    EarthAltitudeMax: 100000000
+    EarthAltitudeMax: 100000000,
+    DefaultCenter: new google.maps.LatLng(-34.397, 150.644)
   })
 
   /**
