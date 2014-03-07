@@ -1,7 +1,7 @@
 /**
  * A Services for interactions with the Street View activity group.
  */
-LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService, Messages) {
+LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService, MasterService, MasterAPI, Messages) {
 
   /**
    * Handle pano changes from Street View by broadcasting into the root scope.
@@ -24,7 +24,8 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
    */
   function activate() {
     console.debug(Messages.StreetView.Activate);
-    SocketService.emit(Messages.StreetView.Activate);
+    //SocketService.emit(Messages.StreetView.Activate);
+    MasterService.activateLiveActivityGroupByName(MasterAPI.Groups.StreetView);
   }
 
   /**
@@ -32,7 +33,8 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
    */
   function deactivate() {
     console.debug(Messages.StreetView.Deactivate);
-    SocketService.emit(Messages.StreetView.Deactivate);
+    //SocketService.emit(Messages.StreetView.Deactivate);
+    MasterService.deactivateLiveActivityGroupByName(MasterAPI.Groups.StreetView);
   }
 
   /**

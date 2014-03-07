@@ -1,7 +1,7 @@
 /**
  * A Service for interactions with the Earth activity group.
  */
-LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService, Messages, QueryMessageFields) {
+LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService,MasterService, MasterAPI, Messages, QueryMessageFields) {
 
   /**
    * Handle view changes from Earth by broadcasting into the root scope.
@@ -16,7 +16,8 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService, Mess
    */
   function activate() {
     console.debug(Messages.Earth.Activate);
-    SocketService.emit(Messages.Earth.Activate);
+    //SocketService.emit(Messages.Earth.Activate);
+    MasterService.activateLiveActivityGroupByName(MasterAPI.Groups.Earth);
   }
 
   /**
@@ -24,7 +25,8 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService, Mess
    */
   function deactivate() {
     console.debug(Messages.Earth.Deactivate);
-    SocketService.emit(Messages.Earth.Deactivate);
+    //SocketService.emit(Messages.Earth.Deactivate);
+    MasterService.deactivateLiveActivityGroupByName(MasterAPI.Groups.Earth);
   }
 
   /**

@@ -40,6 +40,36 @@ LiquidGalaxyApp
   })
 
   /**
+   * Configuration for the IS master service.
+   */
+  .value('MasterAPI', {
+    Uri: IS.Configuration['lg.master.api.uri'],
+    Paths: {
+      LiveActivity: 'liveactivity',
+      LiveActivityGroup: 'liveactivitygroup'
+    },
+    Fields: {
+      Result: 'result',
+      Data: 'data',
+      Name: 'name'
+    },
+    Results: {
+      Success: 'success'
+    },
+    Commands: {
+      List: 'all',
+      Startup: 'startup',
+      Shutdown: 'shutdown',
+      Activate: 'activate',
+      Deactivate: 'deactivate'
+    },
+    Groups: {
+      Earth: IS.Configuration['lg.webctl.group.earth'],
+      StreetView: IS.Configuration['lg.webctl.group.streetview']
+    }
+  })
+
+  /**
    * Extra configuration for map behaviors.
    */
   .value('MapConfig', {
