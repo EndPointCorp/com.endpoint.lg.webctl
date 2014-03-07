@@ -102,10 +102,10 @@ html body {
 #poi {
   position: absolute;
   z-index: 3;
-  /*
   top: 95px;
-  */
+  /*
   bottom: 115px;
+  */
   left: 10px;
 }
 
@@ -278,7 +278,10 @@ html body {
 #planet {
   position: absolute;
   z-index: 2;
+  top: 950px;
+  /*
   bottom: 33px;
+  */
   left: 160px;
 }
 
