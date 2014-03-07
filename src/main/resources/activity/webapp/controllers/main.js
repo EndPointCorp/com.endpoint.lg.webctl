@@ -46,6 +46,26 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   }
 
   /**
+   * Generates an Earth view looking down at the given LatLng.
+   */
+  $scope.generateEarthQuery = function(latLng) {
+    return {
+      type: "camera",
+      location: {
+        latitude: latLng.lat(),
+        longitude: latLng.lng(),
+        altitude: 500
+      },
+      orientation: {
+        heading: 0,
+        tilt: 0,
+        roll: 0
+      },
+      altitudeMode: "relativeToGround"
+    };
+  }
+
+  /**
    * Loads the given planet, if not already on that planet.
    *
    * Ensures that Earth is the active App.
@@ -62,14 +82,19 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    * Loads the given Street View panorama.
    *
    * Ensures that Street View is the active App.
+   * @param panoData
+   *          a google.maps.StreetViewPanoramaData object
    */
-  $scope.loadPano = function(panoid, heading) {
+  $scope.loadPano = function(panoData, heading) {
     // TODO: abstract number validation
     if (!isNaN(parseFloat(heading)) && isFinite(heading)) {
       StreetViewService.setPov({heading: heading, pitch: 0});
     }
-    StreetViewService.setPano(panoid);
+    StreetViewService.setPano(panoData.location.pano);
     $scope.switchToStreetView();
+
+    var earthQuery = $scope.generateEarthQuery(panoData.location.latLng);
+    EarthService.setView(earthQuery);
   }
 
   /**
@@ -89,12 +114,12 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    */
   $scope.loadStreetViewPoi = function(poi) {
     var thatPoi = poi;
-    
+
     $scope.svSvc.getPanoramaById(
       poi.panoid,
-      function(data, stat) {
+      function(panoData, stat) {
         if (stat == google.maps.StreetViewStatus.OK) {
-          $scope.loadPano(data.location.pano, thatPoi.heading);
+          $scope.loadPano(panoData, thatPoi.heading);
         } else {
           console.error('pano not found:', poi.panoid);
         }
@@ -140,7 +165,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.$on(UIEvents.Map.SelectPano, function($event, panoData) {
     console.log('loading pano', panoData);
 
-    $scope.loadPano(panoData.location.pano);
+    $scope.loadPano(panoData);
   });
 
   /**
@@ -193,7 +218,19 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    *
    * Ensure that Street View is the active App.
    */
-  $scope.$on(Messages.StreetView.PanoChanged, function() {
+  $scope.$on(Messages.StreetView.PanoChanged, function($event, pano) {
     $scope.switchToStreetView();
+
+    $scope.svSvc.getPanoramaById(
+      pano.panoid,
+      function(panoData, stat) {
+        if (stat == google.maps.StreetViewStatus.OK) {
+          var earthQuery = $scope.generateEarthQuery(panoData.location.latLng);
+          EarthService.setView(earthQuery);
+        } else {
+          console.error('pano not found:', pano.panoid);
+        }
+      }
+    );
   });
 }
