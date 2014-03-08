@@ -1,12 +1,12 @@
 /**
  * A Services for interactions with the Street View activity group.
  */
-LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService, MasterService, MasterHTTP, Messages) {
+LiquidGalaxyApp.service('StreetViewService', function($rootScope, MessageService, MasterService, MasterHTTP, Messages) {
 
   /**
    * Handle pano changes from Street View by broadcasting into the root scope.
    */
-  SocketService.on(Messages.StreetView.PanoChanged, function(pano) {
+  MessageService.on(Messages.StreetView.PanoChanged, function(pano) {
     console.debug(Messages.StreetView.PanoChanged);
     $rootScope.$broadcast(Messages.StreetView.PanoChanged, pano);
   });
@@ -14,7 +14,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
   /**
    * Handle pov changes from Street View by broadcasting into the root scope.
    */
-  SocketService.on(Messages.StreetView.PovChanged, function(pov) {
+  MessageService.on(Messages.StreetView.PovChanged, function(pov) {
     console.debug(Messages.StreetView.PovChanged);
     $rootScope.$broadcast(Messages.StreetView.PovChanged, pov);
   });
@@ -56,7 +56,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
    */
   function setPano(panoid) {
     console.debug(Messages.StreetView.SetPano);
-    SocketService.emit(Messages.StreetView.SetPano, { panoid: panoid });
+    MessageService.emit(Messages.StreetView.SetPano, { panoid: panoid });
   }
 
   /**
@@ -64,7 +64,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
    */
   function setPov(pov) {
     console.debug(Messages.StreetView.SetPov);
-    SocketService.emit(Messages.StreetView.SetPov, pov);
+    MessageService.emit(Messages.StreetView.SetPov, pov);
   }
 
   /**

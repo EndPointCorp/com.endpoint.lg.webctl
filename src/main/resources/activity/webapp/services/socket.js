@@ -1,24 +1,37 @@
 /**
- * A Service for interfacing the IS websocket library.
+ * Check for the IS.Configuration object.
  */
-LiquidGalaxyApp.service('SocketService', function(SocketConfig) {
+if (!IS || !IS.Configuration) {
+  console.error("IS.MessageModule depends upon IS.Configuration. Add a WebConfigHandler to your live activity's WebServer and load it before this module.");
+}
 
+/**
+ * Check for the IS.Connection object.
+ */
+if (!IS || !IS.Connection) {
+  console.error("IS.MessageModule depends upon IS.Connection. Load the is.socket library before this module.");
+}
+
+/**
+ * A module for interacting with IS websockets.
+ */
+angular.module('IS.MessageModule', [])
+
+/**
+ * Configuration for the socket backend.
+ */
+.value('SocketConfig', {
+  Host: '127.0.0.1',
+  Port: Number(IS.Configuration['space.activity.webapp.web.server.port']),
+  Channel: '/websocket'
+})
+
+/**
+ * A service for communicating with IS typed websocket messages.
+ */
+.factory('MessageService', ['SocketConfig', function(SocketConfig) {
   var messageHandlers = {};
   var socket = new IS.Connection();
-
-  /**
-   * Handle socket connection.
-   */
-  socket.onConnect(function() {
-    console.debug('Socket.connected');
-  });
-
-  /**
-   * Handle socket disconnection.
-   */
-  socket.onDisconnect(function() {
-    console.debug('Socket.disconnected');
-  });
 
   /**
    * Handle socket messages by routing them to their handlers.
@@ -31,6 +44,9 @@ LiquidGalaxyApp.service('SocketService', function(SocketConfig) {
     }
   });
 
+  /**
+   * Connect to the socket.
+   */
   socket.connect(SocketConfig.Host, SocketConfig.Port, SocketConfig.Channel);
 
   /**
@@ -53,8 +69,11 @@ LiquidGalaxyApp.service('SocketService', function(SocketConfig) {
     }
   }
 
+  /**
+   * Public interface.
+   */
   return {
     emit: emit,
     on: on
-  }
-});
+  };
+}]);

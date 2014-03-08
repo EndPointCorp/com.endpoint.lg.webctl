@@ -1,7 +1,7 @@
 /**
  * A somewhat monolithic Angular module for this webapp.
  */
-var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.MasterModule']);
+var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.MasterModule', 'IS.MessageModule']);
 
 LiquidGalaxyApp
 
@@ -28,15 +28,6 @@ LiquidGalaxyApp
     Earth: 'earth',
     Moon: 'moon',
     Mars: 'mars'
-  })
-
-  /**
-   * Configuration for the socket backend.
-   */
-  .value('SocketConfig', {
-    Host: '127.0.0.1',
-    Port: Number(IS.Configuration['space.activity.webapp.web.server.port']),
-    Channel: '/websocket'
   })
 
   /**
