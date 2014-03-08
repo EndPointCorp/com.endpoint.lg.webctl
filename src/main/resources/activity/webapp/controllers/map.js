@@ -26,7 +26,6 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
 
   /**
    * Instantiate the Street View location marker.
-   * TODO: make marker visibility logic less terribly scattered
    */
   $scope.svMarker = new google.maps.Marker({
     position: MapConfig.DefaultCenter,
@@ -38,13 +37,18 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
   /**
    * Show the Street View location marker when appropriate.
    */
-  $scope.$watch('streetView', function(streetView) {
-    if (streetView) {
-      $scope.svMarker.setMap($scope.map);
-    } else {
-      $scope.svMarker.setMap(null);
+  $scope.$watch(
+    function() {
+      return $scope.activeApp == Apps.StreetView && $scope.mode == Modes.StreetView;
+    },
+    function(streetView) {
+      if (streetView) {
+        $scope.svMarker.setMap($scope.map);
+      } else {
+        $scope.svMarker.setMap(null);
+      }
     }
-  });
+  );
 
   /**
    * Move the Street View location marker when the pano changes.
@@ -56,15 +60,33 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
   });
 
   /**
+   * Show the Street View coverage layer when appropriate.
+   */
+  $scope.$watch(
+    function() {
+      return $scope.mode == Modes.StreetView && $scope.zoom >= MapConfig.MinStreetViewZoomLevel;
+    },
+    function(showCoverage) {
+      if (showCoverage) {
+        $scope.coverage = true;
+        $scope.svCoverageLayer.setMap($scope.map);
+      } else {
+        $scope.coverage = false;
+        $scope.svCoverageLayer.setMap(null);
+      }
+    }
+  );
+
+  /**
    * Broadcast zoom changes.
    */
   google.maps.event.addListener($scope.map, 'zoom_changed', function() {
     $rootScope.$broadcast(UIEvents.Map.ZoomChanged, $scope.map.getZoom());
-    $scope.checkCoverage();
+    $scope.$digest();
   });
 
   /**
-   * Handle map clicks.
+   * Handle map clicks, load Street View if a pano is found nearby.
    */
   google.maps.event.addListener($scope.map, 'click', function(ev) {
     $scope.clickLatLng = ev.latLng;
@@ -73,9 +95,9 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
     $scope.svSvc.getPanoramaByLocation(
       ev.latLng,
       MapConfig.MapClickSearchRadius,
-      function(data, stat) {
+      function(panoData, stat) {
         if (stat == google.maps.StreetViewStatus.OK) {
-          $rootScope.$broadcast(UIEvents.Map.SelectPano, data);
+          $rootScope.$broadcast(UIEvents.Map.SelectPano, panoData);
         }
       }
     );
@@ -126,62 +148,14 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
   });
 
   /**
-   * Shows the Street View coverage layer.
-   */
-  $scope.showCoverage = function() {
-    if ($scope.coverage) return;
-
-    $scope.coverage = true;
-    $scope.svCoverageLayer.setMap($scope.map);
-  }
-
-  /**
-   * Hides the Street View coverage layer.
-   */
-  $scope.hideCoverage = function() {
-    if (!$scope.coverage) return;
-
-    $scope.coverage = false;
-    $scope.svCoverageLayer.setMap(null);
-  }
-
-  /**
-   * Updates the Street View coverage layer's visibility.
-   */
-  $scope.checkCoverage = function() {
-    if ($scope.map.getZoom() >= MapConfig.MinStreetViewZoomLevel && $scope.streetView && $scope.checkVisibility()) {
-      $scope.showCoverage();
-    } else {
-      $scope.hideCoverage();
-    }
-  }
-
-  /**
-   * Handle UI mode changes.
-   */
-  $scope.$on(UIEvents.Mode.SelectMode, function($event, mode) {
-    $scope.streetView = (mode == Modes.StreetView);
-    $scope.checkCoverage();
-  });
-
-  /**
    * Returns true if the map canvas should be visible.
-   *
-   * This method may also need to manipulate the map to prevent glitches.
    */
   $scope.checkVisibility = function() {
-    var visibility = ($scope.planet == Planets.Earth && !$scope.searching);
-    /*
-    // this might prevent map canvas glitches
-    if (visibility) {
-      google.maps.event.trigger($scope.map, 'resize');
-    }
-    */
-    return visibility;
+    return $scope.planet == Planets.Earth && !$scope.searching;
   }
 
   /**
-   * Handle Earth view changes.
+   * Handle Earth view changes from the websocket.
    */
   $scope.$on(Messages.Earth.ViewChanged, function($event, viewsyncData) {
     if ($scope.activeApp != Apps.Earth || $scope.mapTakeover) return;
@@ -202,7 +176,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
   });
 
   /**
-   * Handle Street View pano changes.
+   * Handle Street View pano changes from the websocket.
    */
   $scope.$on(Messages.StreetView.PanoChanged, function($event, pano) {
     $scope.svSvc.getPanoramaById(pano.panoid, function(data, stat) {

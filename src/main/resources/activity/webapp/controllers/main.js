@@ -221,18 +221,18 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    *
    * Ensure that Street View is the active App.
    */
-  $scope.$on(Messages.StreetView.PanoChanged, function($event, pano) {
+  $scope.$on(Messages.StreetView.PanoChanged, function($event, panoMessage) {
     $scope.switchToStreetView();
 
     $scope.svSvc.getPanoramaById(
-      pano.panoid,
+      panoMessage.panoid,
       function(panoData, stat) {
         if (stat == google.maps.StreetViewStatus.OK) {
           $scope.panoData = panoData;
           var earthQuery = $scope.generateEarthQuery(panoData.location.latLng);
           EarthService.setView(earthQuery);
         } else {
-          console.error('pano not found:', pano.panoid);
+          console.error('pano not found:', panoMessage.panoid);
         }
       }
     );
