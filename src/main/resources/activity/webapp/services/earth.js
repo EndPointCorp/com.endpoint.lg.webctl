@@ -1,7 +1,7 @@
 /**
  * A Service for interactions with the Earth activity group.
  */
-LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, MasterService, MasterHTTP, Messages, QueryMessageFields) {
+LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, MasterService, ActivityGroups, Messages, QueryMessageFields) {
 
   /**
    * Handle view changes from Earth by broadcasting into the root scope.
@@ -16,7 +16,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, Mas
    */
   function startup() {
     console.debug(Messages.Earth.Startup);
-    MasterService.startupLiveActivityGroupByName(MasterHTTP.Groups.Earth);
+    MasterService.startupLiveActivityGroupByName(ActivityGroups.Earth);
   }
 
   /**
@@ -24,7 +24,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, Mas
    */
   function shutdown() {
     console.debug(Messages.Earth.Shutdown);
-    MasterService.shutdownLiveActivityGroupByName(MasterHTTP.Groups.Earth);
+    MasterService.shutdownLiveActivityGroupByName(ActivityGroups.Earth);
   }
 
   /**
@@ -32,7 +32,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, Mas
    */
   function activate() {
     console.debug(Messages.Earth.Activate);
-    MasterService.activateLiveActivityGroupByName(MasterHTTP.Groups.Earth);
+    MasterService.activateLiveActivityGroupByName(ActivityGroups.Earth);
   }
 
   /**
@@ -40,7 +40,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, Mas
    */
   function deactivate() {
     console.debug(Messages.Earth.Deactivate);
-    MasterService.deactivateLiveActivityGroupByName(MasterHTTP.Groups.Earth);
+    MasterService.deactivateLiveActivityGroupByName(ActivityGroups.Earth);
   }
 
   /**

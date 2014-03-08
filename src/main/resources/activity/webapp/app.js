@@ -14,6 +14,14 @@ LiquidGalaxyApp
   })
 
   /**
+   * ActivityGroups are the names of activity groups for Apps.
+   */
+  .value('ActivityGroups', {
+    StreetView: IS.Configuration['lg.webctl.group.streetview'],
+    Earth: IS.Configuration['lg.webctl.group.earth']
+  })
+
+  /**
    * Modes are states of map operation, for toggling Street View coverage layer and exiting Street View.
    */
   .value('Modes', {

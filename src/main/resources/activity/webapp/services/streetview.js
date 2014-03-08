@@ -1,7 +1,7 @@
 /**
  * A Services for interactions with the Street View activity group.
  */
-LiquidGalaxyApp.service('StreetViewService', function($rootScope, MessageService, MasterService, MasterHTTP, Messages) {
+LiquidGalaxyApp.service('StreetViewService', function($rootScope, MessageService, MasterService, ActivityGroups, Messages) {
 
   /**
    * Handle pano changes from Street View by broadcasting into the root scope.
@@ -24,7 +24,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, MessageService
    */
   function startup() {
     console.debug(Messages.StreetView.Startup);
-    MasterService.startupLiveActivityGroupByName(MasterHTTP.Groups.StreetView);
+    MasterService.startupLiveActivityGroupByName(ActivityGroups.StreetView);
   }
 
   /**
@@ -32,7 +32,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, MessageService
    */
   function shutdown() {
     console.debug(Messages.StreetView.Shutdown);
-    MasterService.shutdownLiveActivityGroupByName(MasterHTTP.Groups.StreetView);
+    MasterService.shutdownLiveActivityGroupByName(ActivityGroups.StreetView);
   }
 
   /**
@@ -40,7 +40,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, MessageService
    */
   function activate() {
     console.debug(Messages.StreetView.Activate);
-    MasterService.activateLiveActivityGroupByName(MasterHTTP.Groups.StreetView);
+    MasterService.activateLiveActivityGroupByName(ActivityGroups.StreetView);
   }
 
   /**
@@ -48,7 +48,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, MessageService
    */
   function deactivate() {
     console.debug(Messages.StreetView.Deactivate);
-    MasterService.deactivateLiveActivityGroupByName(MasterHTTP.Groups.StreetView);
+    MasterService.deactivateLiveActivityGroupByName(ActivityGroups.StreetView);
   }
 
   /**
