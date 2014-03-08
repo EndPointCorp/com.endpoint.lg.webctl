@@ -1,7 +1,7 @@
 /**
  * A Service for interactions with the Earth activity group.
  */
-LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService,MasterService, MasterAPI, Messages, QueryMessageFields) {
+LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService,MasterService, MasterHTTP, Messages, QueryMessageFields) {
 
   /**
    * Handle view changes from Earth by broadcasting into the root scope.
@@ -16,8 +16,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService,Maste
    */
   function startup() {
     console.debug(Messages.Earth.Startup);
-    //SocketService.emit(Messages.Earth.Startup);
-    MasterService.startupLiveActivityGroupByName(MasterAPI.Groups.Earth);
+    MasterService.startupLiveActivityGroupByName(MasterHTTP.Groups.Earth);
   }
 
   /**
@@ -25,8 +24,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService,Maste
    */
   function shutdown() {
     console.debug(Messages.Earth.Shutdown);
-    //SocketService.emit(Messages.Earth.Shutdown);
-    MasterService.shutdownLiveActivityGroupByName(MasterAPI.Groups.Earth);
+    MasterService.shutdownLiveActivityGroupByName(MasterHTTP.Groups.Earth);
   }
 
   /**
@@ -34,8 +32,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService,Maste
    */
   function activate() {
     console.debug(Messages.Earth.Activate);
-    //SocketService.emit(Messages.Earth.Activate);
-    MasterService.activateLiveActivityGroupByName(MasterAPI.Groups.Earth);
+    MasterService.activateLiveActivityGroupByName(MasterHTTP.Groups.Earth);
   }
 
   /**
@@ -43,8 +40,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService,Maste
    */
   function deactivate() {
     console.debug(Messages.Earth.Deactivate);
-    //SocketService.emit(Messages.Earth.Deactivate);
-    MasterService.deactivateLiveActivityGroupByName(MasterAPI.Groups.Earth);
+    MasterService.deactivateLiveActivityGroupByName(MasterHTTP.Groups.Earth);
   }
 
   /**
@@ -79,6 +75,9 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, SocketService,Maste
     SocketService.emit(Messages.Earth.Search, message);
   }
 
+  /**
+   * Public interface.
+   */
   return {
     startup: startup,
     shutdown: shutdown,

@@ -1,7 +1,7 @@
 /**
  * A somewhat monolithic Angular module for this webapp.
  */
-var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize']);
+var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.MasterModule']);
 
 LiquidGalaxyApp
 
@@ -37,37 +37,6 @@ LiquidGalaxyApp
     Host: '127.0.0.1',
     Port: Number(IS.Configuration['space.activity.webapp.web.server.port']),
     Channel: '/websocket'
-  })
-
-  /**
-   * Configuration for the IS master service.
-   */
-  .value('MasterAPI', {
-    Uri: IS.Configuration['lg.master.api.uri'],
-    Paths: {
-      LiveActivity: 'liveactivity',
-      LiveActivityGroup: 'liveactivitygroup'
-    },
-    Fields: {
-      Result: 'result',
-      Data: 'data',
-      Message: 'message',
-      Name: 'name'
-    },
-    Results: {
-      Success: 'success'
-    },
-    Commands: {
-      List: 'all',
-      Startup: 'startup',
-      Shutdown: 'shutdown',
-      Activate: 'activate',
-      Deactivate: 'deactivate'
-    },
-    Groups: {
-      Earth: IS.Configuration['lg.webctl.group.earth'],
-      StreetView: IS.Configuration['lg.webctl.group.streetview']
-    }
   })
 
   /**

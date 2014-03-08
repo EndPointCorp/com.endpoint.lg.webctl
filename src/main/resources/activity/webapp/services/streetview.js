@@ -1,7 +1,7 @@
 /**
  * A Services for interactions with the Street View activity group.
  */
-LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService, MasterService, MasterAPI, Messages) {
+LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService, MasterService, MasterHTTP, Messages) {
 
   /**
    * Handle pano changes from Street View by broadcasting into the root scope.
@@ -24,8 +24,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
    */
   function startup() {
     console.debug(Messages.StreetView.Startup);
-    //SocketService.emit(Messages.StreetView.Startup);
-    MasterService.startupLiveActivityGroupByName(MasterAPI.Groups.StreetView);
+    MasterService.startupLiveActivityGroupByName(MasterHTTP.Groups.StreetView);
   }
 
   /**
@@ -33,8 +32,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
    */
   function shutdown() {
     console.debug(Messages.StreetView.Shutdown);
-    //SocketService.emit(Messages.StreetView.Shutdown);
-    MasterService.shutdownLiveActivityGroupByName(MasterAPI.Groups.StreetView);
+    MasterService.shutdownLiveActivityGroupByName(MasterHTTP.Groups.StreetView);
   }
 
   /**
@@ -42,8 +40,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
    */
   function activate() {
     console.debug(Messages.StreetView.Activate);
-    //SocketService.emit(Messages.StreetView.Activate);
-    MasterService.activateLiveActivityGroupByName(MasterAPI.Groups.StreetView);
+    MasterService.activateLiveActivityGroupByName(MasterHTTP.Groups.StreetView);
   }
 
   /**
@@ -51,8 +48,7 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
    */
   function deactivate() {
     console.debug(Messages.StreetView.Deactivate);
-    //SocketService.emit(Messages.StreetView.Deactivate);
-    MasterService.deactivateLiveActivityGroupByName(MasterAPI.Groups.StreetView);
+    MasterService.deactivateLiveActivityGroupByName(MasterHTTP.Groups.StreetView);
   }
 
   /**
@@ -71,6 +67,9 @@ LiquidGalaxyApp.service('StreetViewService', function($rootScope, SocketService,
     SocketService.emit(Messages.StreetView.SetPov, pov);
   }
 
+  /**
+   * Public interface.
+   */
   return {
     startup: startup,
     shutdown: shutdown,

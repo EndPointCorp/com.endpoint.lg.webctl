@@ -1,27 +1,64 @@
 /**
- * A Service for interacting with the IS master.
+ * A module for interacting with the IS master.
+ * 
+ * Depends on the IS.Configuration object served by WebConfigHandler.
  */
-LiquidGalaxyApp.service('MasterService', function($http, MasterAPI) {
+angular.module('IS.MasterModule', [])
 
+/**
+ * Configuration and constants for the IS master service.
+ */
+.value('MasterHTTP', {
+  Uri: IS.Configuration['lg.master.api.uri'],
+  ObjectTypes: {
+    LiveActivity: 'liveactivity',
+    LiveActivityGroup: 'liveactivitygroup'
+  },
+  Fields: {
+    Result: 'result',
+    Data: 'data',
+    Message: 'message',
+    Name: 'name'
+  },
+  Results: {
+    Success: 'success'
+  },
+  Commands: {
+    List: 'all',
+    Startup: 'startup',
+    Shutdown: 'shutdown',
+    Activate: 'activate',
+    Deactivate: 'deactivate'
+  },
+  Groups: {
+    Earth: IS.Configuration['lg.webctl.group.earth'],
+    StreetView: IS.Configuration['lg.webctl.group.streetview']
+  }
+})
+
+/**
+ * A service for sending commands to the IS master.
+ */
+.factory('MasterService', ['$http', 'MasterHTTP', function($http, MasterHTTP) {
   /** 
    * Makes a cached HTTP request.
    */
-  function makeRequest(uri, callback, cache) {
+  function makeRequest(uri, callback, opts) {
     callback = callback || null;
-    cache = cache ? true : false;
+    opts = opts || {};
 
     console.debug('Master.makeRequest', uri);
 
-    $http.get(uri, { cache: cache })
+    $http.get(uri, opts)
 
     .success(function(response, stat) {
-      if (response[MasterAPI.Fields.Result] == MasterAPI.Results.Success) {
+      if (response[MasterHTTP.Fields.Result] == MasterHTTP.Results.Success) {
         if (callback) {
-          callback(response[MasterAPI.Fields.Data]);
+          callback(response[MasterHTTP.Fields.Data]);
         }
       } else {
         console.error('Interactive Spaces error from', uri);
-        console.error(reponse[MasterAPI.Fields.Message]);
+        console.error(reponse[MasterHTTP.Fields.Message]);
       }
     })
 
@@ -34,57 +71,32 @@ LiquidGalaxyApp.service('MasterService', function($http, MasterAPI) {
    * Get a uri to the master API with the given relative path.
    */
   function uri(path) {
-    return MasterAPI.Uri + '/' + path;
+    return MasterHTTP.Uri + '/' + path;
   }
 
   /**
-   * Sends a command to a live activity.
+   * Makes a request for a list of IS objects.
    */
-  function sendCommandToLiveActivity(liveActivity, command) {
+  function getObjects(type, callback) {
     makeRequest(
-      uri([MasterAPI.Paths.LiveActivity, liveActivity.id, command+'.json'].join('/'))
-    );
-  }
-
-  /**
-   * Sends a command to a live activity group.
-   */
-  function sendCommandToLiveActivityGroup(liveActivityGroup, command) {
-    makeRequest(
-      uri([MasterAPI.Paths.LiveActivityGroup, liveActivityGroup.id, command+'.json'].join('/'))
-    );
-  }
-
-  /**
-   * Makes a request for the live activity list.
-   */
-  function getLiveActivities(callback) {
-    makeRequest(
-      uri([MasterAPI.Paths.LiveActivity, MasterAPI.Commands.List+'.json'].join('/')),
+      uri([type, MasterHTTP.Commands.List+'.json'].join('/')),
       callback,
-      true
+      { cache: true }
     );
   }
 
   /**
-   * Makes a request for the live activity group list.
+   * Find an IS object by its name and run the callback if found.
+   * 
+   * Only the first object with the provided name is processed.
    */
-  function getLiveActivityGroups(callback) {
-    makeRequest(
-      uri([MasterAPI.Paths.LiveActivityGroup, MasterAPI.Commands.List+'.json'].join('/')),
-      callback,
-      true
-    );
-  }
+  function getObjectByName(name, type, callback) {
+    getObjects(type, function(objects) {
+      for (var i in objects) {
+        var object = objects[i];
 
-  /**
-   * Find a live activity by its name and run the callback if found.
-   */
-  function getLiveActivityByName(name, callback) {
-    getLiveActivities(function(liveActivities) {
-      for (var liveActivity in liveActivities) {
-        if (liveActivities[liveActivity][MasterAPI.Fields.Name] == name) {
-          callback(liveActivities[liveActivity]);
+        if (object[MasterHTTP.Fields.Name] == name) {
+          callback(object);
           break;
         }
       }
@@ -92,16 +104,20 @@ LiquidGalaxyApp.service('MasterService', function($http, MasterAPI) {
   }
 
   /**
-   * Find a live activity group by namemaster and run the callback if found.
+   * Sends a command to an IS object.
    */
-  function getLiveActivityGroupByName(name, callback) {
-    getLiveActivityGroups(function(liveActivityGroups) {
-      for (var liveActivityGroup in liveActivityGroups) {
-        if (liveActivityGroups[liveActivityGroup][MasterAPI.Fields.Name] == name) {
-          callback(liveActivityGroups[liveActivityGroup]);
-          break;
-        }
-      }
+  function sendCommandToObject(object, type, command) {
+    makeRequest(
+      uri([type, object.id, command+'.json'].join('/'))
+    );
+  }
+
+  /**
+   * Send a command to an IS object by name.
+   */
+  function sendCommandToObjectByName(name, type, command) {
+    getObjectByName(name, type, function(object) {
+      sendCommandToObject(object, type, command);
     });
   }
 
@@ -110,55 +126,63 @@ LiquidGalaxyApp.service('MasterService', function($http, MasterAPI) {
    */
 
   function startupLiveActivityByName(name) {
-    getLiveActivityByName(name, function(liveActivity) {
-      sendCommandToLiveActivity(liveActivity, MasterAPI.Commands.Startup);
-    });
+    var type = MasterHTTP.ObjectTypes.LiveActivity;
+    var command = MasterHTTP.Commands.Startup;
+
+    sendCommandToObjectByName(name, type, command);
   }
 
   function shutdownLiveActivityByName(name) {
-    getLiveActivityByName(name, function(liveActivity) {
-      sendCommandToLiveActivity(liveActivity, MasterAPI.Commands.Shutdown);
-    });
+    var type = MasterHTTP.ObjectTypes.LiveActivity;
+    var command = MasterHTTP.Commands.Shutdown;
+
+    sendCommandToObjectByName(name, type, command);
   }
 
   function activateLiveActivityByName(name) {
-    getLiveActivityByName(name, function(liveActivity) {
-      sendCommandToLiveActivity(liveActivity, MasterAPI.Commands.Activate);
-    });
+    var type = MasterHTTP.ObjectTypes.LiveActivity;
+    var command = MasterHTTP.Commands.Activate;
+
+    sendCommandToObjectByName(name, type, command);
   }
 
   function deactivateLiveActivityByName(name) {
-    getLiveActivityByName(name, function(liveActivity) {
-      sendCommandToLiveActivity(liveActivity, MasterAPI.Commands.Deactivate);
-    });
+    var type = MasterHTTP.ObjectTypes.LiveActivity;
+    var command = MasterHTTP.Commands.Deactivate;
+
+    sendCommandToObjectByName(name, type, command);
   }
 
   function startupLiveActivityGroupByName(name) {
-    getLiveActivityGroupByName(name, function(liveActivityGroup) {
-      sendCommandToLiveActivityGroup(liveActivityGroup, MasterAPI.Commands.Startup);
-    });
+    var type = MasterHTTP.ObjectTypes.LiveActivityGroup;
+    var command = MasterHTTP.Commands.Startup;
+
+    sendCommandToObjectByName(name, type, command);
   }
 
   function shutdownLiveActivityGroupByName(name) {
-    getLiveActivityGroupByName(name, function(liveActivityGroup) {
-      sendCommandToLiveActivityGroup(liveActivityGroup, MasterAPI.Commands.Shutdown);
-    });
+    var type = MasterHTTP.ObjectTypes.LiveActivityGroup;
+    var command = MasterHTTP.Commands.Shutdown;
+
+    sendCommandToObjectByName(name, type, command);
   }
 
   function activateLiveActivityGroupByName(name) {
-    getLiveActivityGroupByName(name, function(liveActivityGroup) {
-      sendCommandToLiveActivityGroup(liveActivityGroup, MasterAPI.Commands.Activate);
-    });
+    var type = MasterHTTP.ObjectTypes.LiveActivityGroup;
+    var command = MasterHTTP.Commands.Activate;
+
+    sendCommandToObjectByName(name, type, command);
   }
 
   function deactivateLiveActivityGroupByName(name) {
-    getLiveActivityGroupByName(name, function(liveActivityGroup) {
-      sendCommandToLiveActivityGroup(liveActivityGroup, MasterAPI.Commands.Deactivate);
-    });
+    var type = MasterHTTP.ObjectTypes.LiveActivityGroup;
+    var command = MasterHTTP.Commands.Deactivate;
+
+    sendCommandToObjectByName(name, type, command);
   }
 
   /**
-   * Service public interface.
+   * Public interface.
    */
   return {
     startupLiveActivityByName: startupLiveActivityByName,
@@ -171,4 +195,4 @@ LiquidGalaxyApp.service('MasterService', function($http, MasterAPI) {
     activateLiveActivityGroupByName: activateLiveActivityGroupByName,
     deactivateLiveActivityGroupByName: deactivateLiveActivityGroupByName
   };
-});
+}]);
