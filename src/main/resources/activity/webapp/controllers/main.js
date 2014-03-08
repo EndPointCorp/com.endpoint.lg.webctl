@@ -18,33 +18,21 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   /**
    * Initialize the activities.
    */
-  EarthService.activate();
+  EarthService.startup();
   StreetViewService.startup();
-  StreetViewService.deactivate();
 
   /**
-   * Switches the active App to Earth.
+   * Control the active app.
    */
-  $scope.switchToEarth = function() {
-    if ($scope.activeApp != Apps.Earth) {
-      $scope.activeApp = Apps.Earth;
-
+  $scope.$watch('activeApp', function(app) {
+    if (app == Apps.Earth) {
       EarthService.activate();
       StreetViewService.deactivate();
-    }
-  }
-
-  /**
-   * Switches the active App to Street View.
-   */
-  $scope.switchToStreetView = function() {
-    if ($scope.activeApp != Apps.StreetView) {
-      $scope.activeApp = Apps.StreetView;
-
+    } else if (app == Apps.StreetView) {
       StreetViewService.activate();
       EarthService.deactivate();
     }
-  }
+  });
 
   /**
    * Generates an Earth view looking down at the given LatLng.
@@ -75,7 +63,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     if (planet != $scope.planet) {
       $scope.planet = planet;
       EarthService.setPlanet(planet);
-      $scope.switchToEarth();
+      $scope.activeApp = Apps.Earth;
     }
   }
 
@@ -94,7 +82,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
       StreetViewService.setPov({heading: heading, pitch: 0});
     }
     StreetViewService.setPano(panoData.location.pano);
-    $scope.switchToStreetView();
+    $scope.activeApp = Apps.StreetView;
 
     var earthQuery = $scope.generateEarthQuery(panoData.location.latLng);
     EarthService.setView(earthQuery);
@@ -107,7 +95,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    */
   $scope.loadEarthPoi = function(poi) {
     EarthService.setView(poi.abstractView);
-    $scope.switchToEarth();
+    $scope.activeApp = Apps.Earth;
   }
 
   /**
@@ -158,7 +146,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     $scope.mode = mode;
 
     if (mode == Modes.Earth) {
-      $scope.switchToEarth();
+      $scope.activeApp = Apps.Earth;
     }
   });
 
@@ -194,7 +182,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     console.log('handling search for', query);
 
     EarthService.search(query);
-    $scope.switchToEarth();
+    $scope.activeApp = Apps.Earth;
   });
 
   /**
@@ -222,13 +210,12 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    * Ensure that Street View is the active App.
    */
   $scope.$on(Messages.StreetView.PanoChanged, function($event, panoMessage) {
-    $scope.switchToStreetView();
-
     $scope.svSvc.getPanoramaById(
       panoMessage.panoid,
       function(panoData, stat) {
         if (stat == google.maps.StreetViewStatus.OK) {
           $scope.panoData = panoData;
+          $scope.activeApp = Apps.StreetView;
           var earthQuery = $scope.generateEarthQuery(panoData.location.latLng);
           EarthService.setView(earthQuery);
         } else {
