@@ -65,24 +65,14 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   }
 
   /**
-   * Loads the given Street View panorama.
-   *
-   * Ensures that Street View is the active App.
-   * @param panoData
-   *          a google.maps.StreetViewPanoramaData object
+   * Loads the given Street View panorama, optionally with a heading.
    */
   $scope.loadPano = function(panoData, heading) {
-    $scope.panoData = panoData;
-
     // TODO: abstract number validation
     if (!isNaN(parseFloat(heading)) && isFinite(heading)) {
       StreetViewService.setPov({heading: heading, pitch: 0});
     }
     StreetViewService.setPano(panoData.location.pano);
-    $scope.activeApp = Apps.StreetView;
-
-    var earthQuery = $scope.generateEarthQuery(panoData.location.latLng);
-    EarthService.setView(earthQuery);
   }
 
   /**
