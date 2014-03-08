@@ -21,6 +21,7 @@ LiquidGalaxyApp.service('MasterService', function($http, MasterAPI) {
         }
       } else {
         console.error('Interactive Spaces error from', uri);
+        console.error(reponse[MasterAPI.Fields.Message]);
       }
     })
 

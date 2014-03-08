@@ -51,6 +51,7 @@ LiquidGalaxyApp
     Fields: {
       Result: 'result',
       Data: 'data',
+      Message: 'message',
       Name: 'name'
     },
     Results: {
