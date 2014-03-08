@@ -156,6 +156,8 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
 
   /**
    * Handle Earth view changes from the websocket.
+   * TODO: refactor altitude to zoom conversion
+   * TODO: refactor viewsync to latLng conversion
    */
   $scope.$on(Messages.Earth.ViewChanged, function($event, viewsyncData) {
     if ($scope.activeApp != Apps.Earth || $scope.mapTakeover) return;
