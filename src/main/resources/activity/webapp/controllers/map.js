@@ -41,12 +41,8 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
     function() {
       return $scope.activeApp == Apps.StreetView && $scope.mode == Modes.StreetView;
     },
-    function(streetView) {
-      if (streetView) {
-        $scope.svMarker.setMap($scope.map);
-      } else {
-        $scope.svMarker.setMap(null);
-      }
+    function(showLocation) {
+      $scope.svMarker.setMap(showLocation ? $scope.map : null);
     }
   );
 
@@ -67,13 +63,8 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
       return $scope.mode == Modes.StreetView && $scope.zoom >= MapConfig.MinStreetViewZoomLevel;
     },
     function(showCoverage) {
-      if (showCoverage) {
-        $scope.coverage = true;
-        $scope.svCoverageLayer.setMap($scope.map);
-      } else {
-        $scope.coverage = false;
-        $scope.svCoverageLayer.setMap(null);
-      }
+      $scope.coverage = showCoverage;
+      $scope.svCoverageLayer.setMap(showCoverage ? $scope.map : null);
     }
   );
 
