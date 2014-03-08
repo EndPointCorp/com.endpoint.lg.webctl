@@ -161,17 +161,6 @@ LiquidGalaxyApp
   /**
    * Points of Interest for each planet.
    */
-  /* 
-   * <LookAt>
-   * <longitude>2.292014985093174</longitude>
-   * <latitude>48.86067281595832</latitude>
-   * <altitude>0</altitude>
-   * <heading>-30.82811991881539</heading>
-   * <tilt>68.12334319265283</tilt>
-   * <range>870.2504450963008</range>
-   * <altitudeMode>relativeToGround</altitudeMode>
-   * </LookAt>
-   */
   .value('PoiContent', {
     'earth': [
       { style: "outdoor", title: "Trevi Fountain, Rome", type: "earth" },
