@@ -1,4 +1,11 @@
 /**
+ * Check for the IS.Configuration object.
+ */
+if (!IS || !IS.Configuration) {
+  console.error("IS.MasterModule depends upon IS.Configuration. Add a WebConfigHandler to your live activity's WebServer and load it before this module.");
+}
+
+/**
  * A module for interacting with the IS master.
  * 
  * Depends on the IS.Configuration object served by WebConfigHandler.
