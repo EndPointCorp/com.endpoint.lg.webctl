@@ -35,6 +35,16 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   });
 
   /**
+   * Observe planet changes.
+   */
+  $scope.$watch('planet', function(planet) {
+    console.debug('switching to planet', planet);
+
+    EarthService.setPlanet(planet);
+    $scope.activeApp = Apps.Earth;
+  });
+
+  /**
    * Generates an Earth view looking down at the given LatLng.
    */
   $scope.generateEarthQuery = function(latLng) {
@@ -52,19 +62,6 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
       },
       altitudeMode: "relativeToGround"
     };
-  }
-
-  /**
-   * Loads the given planet, if not already on that planet.
-   *
-   * Ensures that Earth is the active App.
-   */
-  $scope.changePlanet = function(planet) {
-    if (planet != $scope.planet) {
-      $scope.planet = planet;
-      EarthService.setPlanet(planet);
-      $scope.activeApp = Apps.Earth;
-    }
   }
 
   /**
@@ -189,9 +186,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    * Handle planet changes from UI.
    */
   $scope.$on(UIEvents.Planet.SelectPlanet, function($event, planet) {
-    console.log('switching to planet', planet);
-
-    $scope.changePlanet(planet);
+    $scope.planet = planet;
   });
 
   /**
