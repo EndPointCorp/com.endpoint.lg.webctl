@@ -180,8 +180,8 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
   /**
    * Handle Street View pano changes from the websocket.
    */
-  $scope.$on(Messages.StreetView.PanoChanged, function($event, pano) {
-    $scope.svSvc.getPanoramaById(pano.panoid, function(data, stat) {
+  $scope.$on(Messages.StreetView.PanoChanged, function($event, panoMessage) {
+    $scope.svSvc.getPanoramaById(panoMessage.panoid, function(data, stat) {
       if (stat == google.maps.StreetViewStatus.OK) {
         $scope.map.panTo(data.location.latLng);
         $scope.map.setZoom(Math.max(MapConfig.MinStreetViewZoomLevel, $scope.map.getZoom()));
