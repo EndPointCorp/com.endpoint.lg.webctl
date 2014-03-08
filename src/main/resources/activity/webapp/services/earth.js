@@ -1,7 +1,74 @@
 /**
+ * Query interface message fields.
+ */
+LiquidGalaxyApp.value('QueryMessageFields', {
+  Planet: {
+    Destination: 'destination'
+  },
+  Search: {
+    Query: 'query'
+  },
+  FlyTo: {
+    Type: 'type',
+    Location: 'location',
+    Orientation: 'orientation',
+    Latitude: 'latitude',
+    Longitude: 'longitude',
+    Altitude: 'altitude',
+    Heading: 'heading',
+    Tilt: 'tilt',
+    Roll: 'roll',
+    Range: 'range',
+    AltitudeMode: 'altitudeMode'
+  }
+});
+
+/**
+ * FlyTo message values.
+ */
+LiquidGalaxyApp.value('FlyToMessageValues', {
+  Type: {
+    Camera: 'camera',
+    LookAt: 'lookat'
+  },
+  AltitudeMode: {
+    Absolute: 'absolute',
+    RelativeToGround: 'relativeToGround',
+    RelativeToSeaFloor: 'relativeToSeaFloor',
+    ClampToGround: 'clampToGround',
+    ClampToSeaFloor: 'clampToSeaFloor'
+  }
+});
+
+/**
  * A Service for interactions with the Earth activity group.
  */
-LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, MasterService, ActivityGroups, Messages, QueryMessageFields) {
+LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, MasterService, ActivityGroups, Messages, QueryMessageFields, FlyToMessageValues) {
+
+  /**
+   * Generates a query message for a view looking down at a point on the ground.
+   */
+  function generateGroundView(latitude, longitude, altitude) {
+    var query = {};
+
+    query[QueryMessageFields.FlyTo.Type] = FlyToMessageValues.Type.Camera;
+
+    var location = {};
+    location[QueryMessageFields.FlyTo.Latitude] = latitude;
+    location[QueryMessageFields.FlyTo.Longitude] = longitude;
+    location[QueryMessageFields.FlyTo.Altitude] = altitude;
+    query[QueryMessageFields.FlyTo.Location] = location;
+
+    var orientation = {};
+    orientation[QueryMessageFields.FlyTo.Heading] = 0;
+    orientation[QueryMessageFields.FlyTo.Tilt] = 0;
+    orientation[QueryMessageFields.FlyTo.Roll] = 0;
+    query[QueryMessageFields.FlyTo.Orientation] = orientation;
+
+    query[QueryMessageFields.FlyTo.AltitudeMode] = FlyToMessageValues.AltitudeMode.RelativeToGround;
+
+    return query;
+  }
 
   /**
    * Handle view changes from Earth by broadcasting into the root scope.
@@ -79,6 +146,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, Mas
    * Public interface.
    */
   return {
+    generateGroundView: generateGroundView,
     startup: startup,
     shutdown: shutdown,
     activate: activate,

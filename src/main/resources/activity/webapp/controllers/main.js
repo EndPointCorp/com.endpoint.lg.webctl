@@ -45,26 +45,6 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   });
 
   /**
-   * Generates an Earth view looking down at the given LatLng.
-   */
-  $scope.generateEarthQuery = function(latLng) {
-    return {
-      type: "camera",
-      location: {
-        latitude: latLng.lat(),
-        longitude: latLng.lng(),
-        altitude: 500
-      },
-      orientation: {
-        heading: 0,
-        tilt: 0,
-        roll: 0
-      },
-      altitudeMode: "relativeToGround"
-    };
-  }
-
-  /**
    * Loads the given Street View panorama, optionally with a heading.
    */
   $scope.loadPano = function(panoData, heading) {
@@ -201,7 +181,9 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
         if (stat == google.maps.StreetViewStatus.OK) {
           $scope.panoData = panoData;
           $scope.activeApp = Apps.StreetView;
-          var earthQuery = $scope.generateEarthQuery(panoData.location.latLng);
+
+          var latLng = panoData.location.latLng;
+          var earthQuery = EarthService.generateGroundView(latLng.lat(), latLng.lng(), 500);
           EarthService.setView(earthQuery);
         } else {
           console.error('pano not found:', panoMessage.panoid);
