@@ -57,7 +57,7 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
 
   public static final String WS_REFRESH = "Refresh";
 
-  public static final String CONFIG_HANDLER_PATH = "is.config.js";
+  public static final String CONFIG_HANDLER_PATH = "/is.config.js";
 
   private StreetviewPov lastStreetviewPov;
   private StreetviewPano lastStreetviewPano;
