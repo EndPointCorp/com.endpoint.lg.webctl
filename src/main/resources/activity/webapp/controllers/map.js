@@ -1,7 +1,7 @@
 /**
  * A Controller for the map.
  */
-function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps, Modes, Planets, EarthMessages, StreetViewMessages, UIEvents) {
+function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps, MapModes, Planets, EarthMessages, StreetViewMessages, UIEvents) {
   $scope.map = null;
   $scope.svCoverageLayer = new google.maps.StreetViewCoverageLayer();
   $scope.svSvc = new google.maps.StreetViewService();
@@ -39,7 +39,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    */
   $scope.$watch(
     function() {
-      return $scope.activeApp == Apps.StreetView && $scope.mode == Modes.StreetView;
+      return $scope.activeApp == Apps.StreetView && $scope.mapMode == MapModes.StreetView;
     },
     function(showLocation) {
       $scope.svMarker.setMap(showLocation ? $scope.map : null);
@@ -60,7 +60,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    */
   $scope.$watch(
     function() {
-      return $scope.mode == Modes.StreetView && $scope.zoom >= MapConfig.MinStreetViewZoomLevel;
+      return $scope.mapMode == MapModes.StreetView && $scope.zoom >= MapConfig.MinStreetViewZoomLevel;
     },
     function(showCoverage) {
       $scope.coverage = showCoverage;

@@ -1,15 +1,13 @@
 /**
- * Controller for the Mode selector, the Earth/Street View control in the top right corner.
- *
- * TODO: rename this entire system
+ * Controller for the MapMode selector, the Earth/Street View control in the top right corner.
  */
-function ModeController($scope, $rootScope, MapConfig, Modes, Planets, StreetViewMessages, UIEvents) {
+function MapModeController($scope, $rootScope, MapConfig, MapModes, Planets, StreetViewMessages, UIEvents) {
 
   /**
    * Broadcasts the selected mode.
    */
   $scope.selectMode = function(mode) {
-    $rootScope.$broadcast(UIEvents.Mode.SelectMode, mode);
+    $rootScope.$broadcast(UIEvents.MapMode.SelectMode, mode);
   }
 
   /**
@@ -24,21 +22,21 @@ function ModeController($scope, $rootScope, MapConfig, Modes, Planets, StreetVie
    * Returns true if the mode selector should be visible.
    */
   $scope.checkVisibility = function() {
-    return $scope.planet == Planets.Earth && !$scope.searching && ($scope.mode == Modes.StreetView || $scope.zoom >= MapConfig.MinStreetViewZoomLevel);
+    return $scope.planet == Planets.Earth && !$scope.searching && ($scope.mode == MapModes.StreetView || $scope.zoom >= MapConfig.MinStreetViewZoomLevel);
   }
 
   /**
    * Handle planet selections from UI.
    */
   $scope.$on(UIEvents.Planet.SelectPlanet, function() {
-    $scope.selectMode(Modes.Earth);
+    $scope.selectMode(MapModes.Earth);
   });
 
   /**
    * Handle search queries by switching to Earth mode.
    */
   $scope.$on(UIEvents.Search.Query, function() {
-    $scope.selectMode(Modes.Earth);
+    $scope.selectMode(MapModes.Earth);
   });
 
   /**
@@ -52,6 +50,6 @@ function ModeController($scope, $rootScope, MapConfig, Modes, Planets, StreetVie
    * Handle pano changes by switching to Street View mode.
    */
   $scope.$on(StreetViewMessages.PanoChanged, function($event) {
-    $scope.selectMode(Modes.StreetView);
+    $scope.selectMode(MapModes.StreetView);
   });
 }

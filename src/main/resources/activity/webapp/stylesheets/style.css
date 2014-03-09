@@ -245,33 +245,33 @@ html body {
   transition: opacity 0.25s ease-out;
 }
 
-#mode {
+#mapmode {
   position: absolute;
   z-index: 2;
   top: 0px;
   right: 0px;
 }
 
-#mode>div {
+#mapmode>div {
   background-repeat: no-repeat;
   height: 205px;
   width: 205px;
   transition: background-image 0.25s ease-out;
 }
 
-#mode>.earth {
+#mapmode>.earth {
   background-image: url('../images/mode_earth.png');
 }
 
-#mode>.streetview {
+#mapmode>.streetview {
   background-image: url('../images/mode_streetview.png');
 }
 
-#mode>.earth_hl {
+#mapmode>.earth_hl {
   background-image: url('../images/mode_earth_hl.png');
 }
 
-#mode>.streetview_hl {
+#mapmode>.streetview_hl {
   background-image: url('../images/mode_streetview_hl.png');
 }
 

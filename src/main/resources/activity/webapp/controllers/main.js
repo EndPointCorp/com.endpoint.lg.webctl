@@ -5,11 +5,11 @@
  *
  * This Controller also interacts with the Earth and StreetView services.
  */
-function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, Modes, Planets, EarthMessages, StreetViewMessages, UIEvents) {
+function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, MapModes, Planets, EarthMessages, StreetViewMessages, UIEvents) {
   $scope.searching = false;
   $scope.zoom = null;
   $scope.planet = Planets.Earth;
-  $scope.mode = Modes.Earth;
+  $scope.mapMode = MapModes.Earth;
   $scope.activeApp = Apps.Earth;
   $scope.panoData = null;
 
@@ -107,12 +107,12 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   /**
    * Handle UI mode changes.  Switch to Earth if it is selected.
    */
-  $scope.$on(UIEvents.Mode.SelectMode, function($event, mode) {
-    console.log('switching UI mode to', mode);
+  $scope.$on(UIEvents.MapMode.SelectMode, function($event, mapMode) {
+    console.log('switching UI mode to', mapMode);
 
-    $scope.mode = mode;
+    $scope.mapMode = mapMode;
 
-    if (mode == Modes.Earth) {
+    if (mapMode == MapModes.Earth) {
       $scope.activeApp = Apps.Earth;
     }
   });

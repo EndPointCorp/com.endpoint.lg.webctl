@@ -20,9 +20,9 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
 })
 
 /**
- * Modes are states of map operation, for toggling Street View coverage layer and exiting Street View.
+ * MapModes are states of the Earth/Street View control.
  */
-.value('Modes', {
+.value('MapModes', {
   StreetView: 'streetview',
   Earth: 'earth'
 })
@@ -52,8 +52,8 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
     ZoomChanged: 'Map.zoomChanged',
     SelectPano: 'Map.selectPano'
   },
-  Mode: {
-    SelectMode: 'Mode.selectMode'
+  MapMode: {
+    SelectMode: 'MapMode.selectMode'
   },
   Planet: {
     SelectPlanet: 'Planet.selectPlanet'

@@ -31,7 +31,7 @@ function PoiController($scope, $rootScope, $sanitize, PoiContent, UIEvents) {
   /**
    * Handlers for clearing the selection on external UI events.
    */
-  $rootScope.$on(UIEvents.Mode.SelectMode, $scope.selectNone);
+  $rootScope.$on(UIEvents.MapMode.SelectMode, $scope.selectNone);
   $rootScope.$on(UIEvents.Search.Query, $scope.selectNone);
 
   /**
