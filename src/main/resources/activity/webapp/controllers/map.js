@@ -1,7 +1,7 @@
 /**
  * A Controller for the map.
  */
-function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps, Modes, Planets, Messages, UIEvents) {
+function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps, Modes, Planets, EarthMessages, StreetViewMessages, UIEvents) {
   $scope.map = null;
   $scope.svCoverageLayer = new google.maps.StreetViewCoverageLayer();
   $scope.svSvc = new google.maps.StreetViewService();
@@ -150,7 +150,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    * TODO: refactor altitude to zoom conversion
    * TODO: refactor viewsync to latLng conversion
    */
-  $scope.$on(Messages.Earth.ViewChanged, function($event, viewsyncData) {
+  $scope.$on(EarthMessages.ViewChanged, function($event, viewsyncData) {
     if ($scope.activeApp != Apps.Earth || $scope.mapTakeover) return;
 
     var altitude = viewsyncData.altitude;
@@ -171,7 +171,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
   /**
    * Handle Street View pano changes from the websocket.
    */
-  $scope.$on(Messages.StreetView.PanoChanged, function($event, panoMessage) {
+  $scope.$on(StreetViewMessages.PanoChanged, function($event, panoMessage) {
     $scope.svSvc.getPanoramaById(panoMessage.panoid, function(data, stat) {
       if (stat == google.maps.StreetViewStatus.OK) {
         $scope.map.panTo(data.location.latLng);

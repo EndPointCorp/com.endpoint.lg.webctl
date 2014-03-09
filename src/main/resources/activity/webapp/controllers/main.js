@@ -5,7 +5,7 @@
  *
  * This Controller also interacts with the Earth and StreetView services.
  */
-function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, Modes, Planets, Messages, UIEvents) {
+function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, Modes, Planets, EarthMessages, StreetViewMessages, UIEvents) {
   $scope.searching = false;
   $scope.zoom = null;
   $scope.planet = Planets.Earth;
@@ -174,7 +174,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    *
    * Ensure that Street View is the active App.
    */
-  $scope.$on(Messages.StreetView.PanoChanged, function($event, panoMessage) {
+  $scope.$on(StreetViewMessages.PanoChanged, function($event, panoMessage) {
     $scope.svSvc.getPanoramaById(
       panoMessage.panoid,
       function(panoData, stat) {

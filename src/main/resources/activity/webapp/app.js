@@ -42,28 +42,6 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
 })
 
 /**
- * Messages types for websocket communication.
- */
-.value('Messages', {
-  Earth: {
-    Activate: 'Earth.activate',
-    Deactivate: 'Earth.deactivate',
-    SetView: 'Earth.setView',
-    SetPlanet: 'Earth.setPlanet',
-    Search: 'Earth.search',
-    ViewChanged: 'Earth.viewChanged'
-  },
-  StreetView: {
-    Activate: 'StreetView.activate',
-    Deactivate: 'StreetView.deactivate',
-    SetPano: 'StreetView.setPano',
-    SetPov: 'StreetView.setPov',
-    PanoChanged: 'StreetView.panoChanged',
-    PovChanged: 'StreetView.povChanged'
-  }
-})
-
-/**
  * Event types for controller communication.
  */
 .value('UIEvents', {

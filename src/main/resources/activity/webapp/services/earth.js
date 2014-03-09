@@ -50,6 +50,18 @@ LiquidGalaxyApp.value('Planets', {
 });
 
 /**
+ * Message types for websocket communication.
+ */
+LiquidGalaxyApp.value('EarthMessages', {
+  Activate: 'Earth.activate',
+  Deactivate: 'Earth.deactivate',
+  SetView: 'Earth.setView',
+  SetPlanet: 'Earth.setPlanet',
+  Search: 'Earth.search',
+  ViewChanged: 'Earth.viewChanged'
+});
+
+/**
  * A Service for interactions with the Earth activity group.
  */
 LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, MasterService, ActivityGroups, EarthMessages, QueryMessageFields, FlyToMessageValues) {
@@ -82,16 +94,16 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, Mas
   /**
    * Handle view changes from Earth by broadcasting into the root scope.
    */
-  MessageService.on(Messages.Earth.ViewChanged, function(viewSyncState) {
-    console.debug(Messages.Earth.ViewChanged);
-    $rootScope.$broadcast(Messages.Earth.ViewChanged, viewSyncState);
+  MessageService.on(EarthMessages.ViewChanged, function(viewSyncState) {
+    console.debug(EarthMessages.ViewChanged);
+    $rootScope.$broadcast(EarthMessages.ViewChanged, viewSyncState);
   });
 
   /**
    * Starts up the Earth activity group.
    */
   function startup() {
-    console.debug(Messages.Earth.Startup);
+    console.debug(EarthMessages.Startup);
     MasterService.startupLiveActivityGroupByName(ActivityGroups.Earth);
   }
 
@@ -99,7 +111,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, Mas
    * Shuts down the Earth activity group.
    */
   function shutdown() {
-    console.debug(Messages.Earth.Shutdown);
+    console.debug(EarthMessages.Shutdown);
     MasterService.shutdownLiveActivityGroupByName(ActivityGroups.Earth);
   }
 
@@ -107,7 +119,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, Mas
    * Activates the Earth activity group.
    */
   function activate() {
-    console.debug(Messages.Earth.Activate);
+    console.debug(EarthMessages.Activate);
     MasterService.activateLiveActivityGroupByName(ActivityGroups.Earth);
   }
 
@@ -115,7 +127,7 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, Mas
    * Deactivates the Earth activity group.
    */
   function deactivate() {
-    console.debug(Messages.Earth.Deactivate);
+    console.debug(EarthMessages.Deactivate);
     MasterService.deactivateLiveActivityGroupByName(ActivityGroups.Earth);
   }
 
@@ -123,32 +135,32 @@ LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, Mas
    * Sends a view change to Earth.
    */
   function setView(abstractView) {
-    console.debug(Messages.Earth.SetView);
-    MessageService.emit(Messages.Earth.SetView, abstractView);
+    console.debug(EarthMessages.SetView);
+    MessageService.emit(EarthMessages.SetView, abstractView);
   }
 
   /**
    * Changes planets.
    */
   function setPlanet(planetName) {
-    console.debug(Messages.Earth.SetPlanet);
+    console.debug(EarthMessages.SetPlanet);
 
     var message = {};
     message[QueryMessageFields.Planet.Destination] = planetName;
 
-    MessageService.emit(Messages.Earth.SetPlanet, message);
+    MessageService.emit(EarthMessages.SetPlanet, message);
   }
 
   /**
    * Sends a search query to Earth.
    */
   function search(query) {
-    console.debug(Messages.Earth.Search);
+    console.debug(EarthMessages.Search);
 
     var message = {};
     message[QueryMessageFields.Search.Query] = query;
 
-    MessageService.emit(Messages.Earth.Search, message);
+    MessageService.emit(EarthMessages.Search, message);
   }
 
   /**

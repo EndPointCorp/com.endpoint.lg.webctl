@@ -3,7 +3,7 @@
  *
  * TODO: rename this entire system
  */
-function ModeController($scope, $rootScope, MapConfig, Modes, Planets, Messages, UIEvents) {
+function ModeController($scope, $rootScope, MapConfig, Modes, Planets, StreetViewMessages, UIEvents) {
 
   /**
    * Broadcasts the selected mode.
@@ -51,7 +51,7 @@ function ModeController($scope, $rootScope, MapConfig, Modes, Planets, Messages,
   /**
    * Handle pano changes by switching to Street View mode.
    */
-  $scope.$on(Messages.StreetView.PanoChanged, function($event) {
+  $scope.$on(StreetViewMessages.PanoChanged, function($event) {
     $scope.selectMode(Modes.StreetView);
   });
 }
