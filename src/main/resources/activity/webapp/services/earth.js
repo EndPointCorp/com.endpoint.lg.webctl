@@ -41,9 +41,18 @@ LiquidGalaxyApp.value('FlyToMessageValues', {
 });
 
 /**
+ * Planets are solar bodies.
+ */
+LiquidGalaxyApp.value('Planets', {
+  Earth: 'earth',
+  Moon: 'moon',
+  Mars: 'mars'
+});
+
+/**
  * A Service for interactions with the Earth activity group.
  */
-LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, MasterService, ActivityGroups, Messages, QueryMessageFields, FlyToMessageValues) {
+LiquidGalaxyApp.service('EarthService', function($rootScope, MessageService, MasterService, ActivityGroups, EarthMessages, QueryMessageFields, FlyToMessageValues) {
 
   /**
    * Generates a query message for a view looking down at a point on the ground.

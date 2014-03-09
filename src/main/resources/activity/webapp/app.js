@@ -28,15 +28,6 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
 })
 
 /**
- * Planets are solar bodies.
- */
-.value('Planets', {
-  Earth: 'earth',
-  Moon: 'moon',
-  Mars: 'mars'
-})
-
-/**
  * Extra configuration for map behaviors.
  */
 .value('MapConfig', {
