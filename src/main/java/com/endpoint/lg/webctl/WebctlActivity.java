@@ -277,14 +277,6 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
   }
 
   /**
-   * Update the <code>WebConfigHandler</code> on configuration changes.
-   */
-  @Override
-  public void onActivityConfigurationUpdate(Map<String, Object> update) {
-    configHandler.updateConfig(getConfiguration());
-  }
-
-  /**
    * Sends incoming web socket messages to the web socket message handlers.
    */
   @Override
