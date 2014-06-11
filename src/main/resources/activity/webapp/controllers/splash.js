@@ -15,15 +15,20 @@
  */
 
 /**
- * Controller for the Splash background, shown when non-Earth planets are active.
- * 
+ * Controller for the Splash background, shown when non-Earth planets are
+ * active.
+ *
  * @author Matt Vollrath <matt@endpoint.com>
+ *
+ * @param {object} $scope - foo
+ * @param {object} $rootScope - foo
+ * @param {object} Planets - foo
  */
 function SplashController($scope, $rootScope, Planets) {
   /**
-   * Returns true if the Splash imagery should be visible.
+   * @return {boolean} - true if Splash imagery should be visible
    */
   $scope.checkVisibility = function() {
     return $scope.planet != Planets.Earth;
-  }
+  };
 }
