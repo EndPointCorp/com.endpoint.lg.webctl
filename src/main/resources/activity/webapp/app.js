@@ -132,7 +132,20 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
  */
 .value('PoiContent', {
   'earth': [
-    { style: "outdoor", title: "Trevi Fountain, Rome", type: "earth" },
+    { style: "outdoor", title: "Tower of Pisa, Pisa", type: "earth", abstractView: {
+      type: "lookat",
+      location: {
+        altitude: 28.58164049751593,
+        latitude: 43.72294597791009,
+        longitude: 10.39670539535571
+      },
+      orientation: {
+        heading: -80.41521503853949,
+        range: 139.75740405485944,
+        tilt: 72.66275673973938
+      },
+      altitudeMode: "relativeToSeaFloor"
+    } },
     { style: "outdoor", title: "Eiffel Tower, Paris", type: "earth", abstractView: {
       type: "lookat",
       location: {
@@ -149,10 +162,36 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
     } },
     { style: "street", title: "Sunset Boulevard, Los Angeles", type: "streetview", panoid: "o4yrNps7LEEGNTssM-xiDg", heading: 50 },
     { style: "ocean", title: "Heron Island, Great Barrier Reef", type: "streetview", panoid: "CWskcsTEZBNXaD8gG-zATA", heading: -25 },
-    { style: "outdoor", title: "Guylian Chocolate Store, Sydney", type: "earth" },
-    { style: "outdoor", title: "Saint John Cathedral, New York", type: "earth" },
-    { style: "indoor", title: "Opera House, Sydney", type: "streetview", panoid: "j-ItqSf62H4AAAAGOzBYXA", heading: 0 },
-    { style: "outdoor", title: "The Grand Canyon", type: "earth", abstractView: {
+    { style: "outdoor", title: "Stonehenge, Wiltshire", type: "earth", abstractView: {
+      type: "camera",
+      location: {
+        altitude: 6.235463957643131,
+        latitude: 51.17885614970503,
+        longitude: -1.825937904608913
+      },
+      orientation: {
+        heading: -87.65004513518046,
+        tilt: 82.84456584198047,
+        roll: 0
+      },
+      altitudeMode: "relativeToSeaFloor"
+    } },
+    { style: "outdoor", title: "Mount Misen, Hiroshima", type: "earth", abstractView: {
+      type: "lookat",
+      location: {
+        altitude: 0,
+        latitude: 34.29760881139214,
+        longitude: 132.3182374372446
+      },
+      orientation: {
+        heading: 173.5020669569355,
+        range: 69.31842303519369,
+        tilt: 82.5619204869066
+      },
+      altitudeMode: "relativeToSeaFloor"
+    } },
+    { style: "indoor", title: "Opera House, Sydney", type: "streetview", panoid: "yr58FW-eQtEAAAQW4fRy2g", heading: 180 },
+    { style: "outdoor", title: "The Grand Canyon, Arizona", type: "earth", abstractView: {
       type: "lookat",
       location: {
         altitude: 0,
@@ -167,7 +206,7 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
       altitudeMode: "relativeToGround"
     } },
     { style: "indoor", title: "State Dining Room,<br />The White House", type: "streetview", panoid: "I5NDPRik49udZwxm4LYdCQ", heading: 90 },
-    { style: "outdoor", title: "GBus Locations<br />(updated @ 10 mins)", type: "earth" }
+    { style: "ocean", title: "Playful Sea Lions, Galapagos", type: "streetview", panoid: "0yfJCnICQIUAAAQIt--IJw", heading: 54 }
   ],
   'moon': [
     { style: "outdoor", title: "Apollo 11", type: "earth" },
