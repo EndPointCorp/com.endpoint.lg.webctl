@@ -19,17 +19,19 @@
  * 
  * @author Matt Vollrath <matt@endpoint.com>
  */
-function PoiController($scope, $rootScope, $sanitize, PoiContent, UIEvents) {
+function PoiController($scope, $rootScope, $sanitize, PoiService, UIEvents) {
   $scope.selectedIndex = null;
 
   // force the poi lists to the bottom by inserting dummy items
-  for (var category in PoiContent) {
-    while (PoiContent[category].length < 10) {
-      PoiContent[category].splice(0, 0, {});
+  for (var category in PoiService.content) {
+    while (PoiService.content[category].length < 10) {
+      PoiService.content[category].splice(0, 0, {});
     }
   }
 
-  $scope.content = PoiContent[$scope.planet];
+  PoiService.promise.then(function() {
+    $scope.content = PoiService.content[$scope.planet];
+  });
 
   /**
    * Broadcasts a POI selection.
@@ -57,6 +59,6 @@ function PoiController($scope, $rootScope, $sanitize, PoiContent, UIEvents) {
    */
   $rootScope.$on(UIEvents.Planet.SelectPlanet, function($event, planet) {
     $scope.selectNone();
-    $scope.content = PoiContent[planet];
+    $scope.content = PoiService.content[planet];
   });
 }
