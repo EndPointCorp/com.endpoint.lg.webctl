@@ -73,8 +73,8 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
   MapMode: {
     SelectMode: 'MapMode.selectMode'
   },
-  Planet: {
-    SelectPlanet: 'Planet.selectPlanet'
+  Page: {
+    SelectPage: 'Page.selectPage'
   },
   Poi: {
     SelectPoi: 'Poi.selectPoi'
@@ -129,19 +129,40 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
 .service('PoiService', function ($http) {
     var poiService = {
         'url' : IS.Configuration['poi.json.url'],
-        'valid' : false
+        'valid' : false,
+        'pages' : []
     };
+
+    poiService.lookupPage = function (p) {
+        for (var i = 0; i < poiService.pages.length; i++) {
+            if (poiService.pages[i].name === p) {
+                return poiService.pages[i];
+            }
+        }
+        return {};
+    }
 
     poiService.refresh = function () {
         poiService.promise = $http.get(poiService.url)
             .success(function (data, status, headers, config) {
                 console.log("Success getting POI json from " + poiService.url);
+
+                // Gotta get a list of pages and what planet they refer to (used to figure out the CSS class for the icon)
+                var pages = [];
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        pages.push({ "name" : key, "planet" : data[key].planet, "planet_hl" : data[key].planet + '_hl' });
+                    }
+                }
+
+                poiService.pages = pages;
                 poiService.content = data;
                 poiService.valid = true;
             })
             .error(function (data, status, headers, config) {
                 console.log("Failed to get POI json from " + poiService.url);
-                poiService.data = ('PoiService', { 'earth' : [] });
+                poiService.data = { };
+                poiService.pages = [];
             });
     };
 

@@ -1,9 +1,6 @@
-{ "planets": [
-    { "name": "Page 1", "style": "earth" },
-    { "name": "Page 2", "style": "earth" }
-  ],
-  "points": {
-    "earth": [
+{ "Page 1": {
+    "planet" : "earth",
+    "points" : [
       { "style": "ocean", "title": "Osprey Reef, Coral Sea", "type": "streetview", "panoid": "UC39RZSwIhYAAAQfCbAHrw", "heading": "358" },
       { "style": "ocean", "title": "Yongala Shipwreck, Great Barrier Reef", "type": "streetview", "panoid": "GbPknZsddS4AAAQfCaRxVg", "heading": "190" },
       { "style": "ocean", "title": "Champion Island East, Galapagos", "type": "streetview", "panoid": "HmAzFa5H7IEAAAQIt-rwjQ", "heading": "322" },
@@ -14,9 +11,14 @@
       { "style": "ocean", "title": "Emily's Pinnacles, Bermuda", "type": "streetview", "panoid": "JTkIzW2WgsAAAAQJOJIx9A", "heading": "140" },
       { "style": "ocean", "title": "Hourglass Reef, Bermuda", "type": "streetview", "panoid": "3keLwG0w2s4AAAQJOJIuOg", "heading": "1" },
       { "style": "ocean", "title": "Mary Celeste Wreck, Bermuda", "type": "streetview", "panoid": "i1i4NPuJaqkAAAQJOJMqGw", "heading": "185" }
-    ],
-    "Page 2": [
+    ]
+  },
+  "Page 2": {
+    "planet" : "earth",
+    "points": [
       { "style": "ocean", "title": "North East Breaker, Bermuda", "type": "streetview", "panoid": "PkL4Nl8xqLgAAAQJOJI4ug", "heading": "307" },
       { "style": "ocean", "title": "South West Breaker, Bermuda", "type": "streetview", "panoid": "CBQIyPaY6qoAAAQJOJIv_g", "heading": "47" },
       { "style": "ocean", "title": "Komodo Islands, Indonesia", "type": "streetview", "panoid": "Ri71LYeNvGsAAAQW4U3bQQ", "heading": "231" }
-    ]}}
+    ]
+  }
+}

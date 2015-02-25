@@ -22,16 +22,27 @@
 function PoiController($scope, $rootScope, $sanitize, PoiService, UIEvents) {
   $scope.selectedIndex = null;
 
-  // force the poi lists to the bottom by inserting dummy items
-  for (var category in PoiService.content) {
-    while (PoiService.content[category].length < 10) {
-      PoiService.content[category].splice(0, 0, {});
-    }
+  var setupPoiContent = function() {
+      if (typeof(PoiService.content) !== 'undefined' && PoiService.content.hasOwnProperty($scope.page)) {
+          $scope.content = PoiService.content[$scope.page].points;
+      };
+
+      // force the poi lists to the bottom by inserting dummy items
+      for (var category in PoiService.content) {
+          while (PoiService.content[category].length < 10) {
+              PoiService.content[category].splice(0, 0, {});
+          }
+      }
   }
 
-  PoiService.promise.then(function() {
-    $scope.content = PoiService.content[$scope.planet];
-  });
+  // Either PoiService is fully set up, or it isn't. If it isn't, this $watch
+  // will make sure we're properly set up when it does complete. We call
+  // setupPoiContent() later, in case PoiService is already configured.
+  $scope.$watch(
+    function() { return PoiService.content; },
+    setupPoiContent
+  );
+  setupPoiContent();
 
   /**
    * Broadcasts a POI selection.
@@ -55,10 +66,10 @@ function PoiController($scope, $rootScope, $sanitize, PoiService, UIEvents) {
   $rootScope.$on(UIEvents.Search.Query, $scope.selectNone);
 
   /**
-   * Handler for planet changes, causing new content to be loaded.
+   * Handler for page changes, causing new content to be loaded.
    */
-  $rootScope.$on(UIEvents.Planet.SelectPlanet, function($event, planet) {
+  $rootScope.$on(UIEvents.Page.SelectPage, function($event, page) {
     $scope.selectNone();
-    $scope.content = PoiService.content[planet];
+    $scope.content = PoiService.content[page].points;
   });
 }

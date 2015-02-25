@@ -116,7 +116,7 @@ function SearchController($scope, $rootScope, $timeout, Planets, UIEvents) {
   /**
    * Clears the search entry upon planet change.
    */
-  $scope.$on(UIEvents.Planet.SelectPlanet, function() {
+  $scope.$on(UIEvents.Page.SelectPage, function() {
     $scope.clear();
   });
 }

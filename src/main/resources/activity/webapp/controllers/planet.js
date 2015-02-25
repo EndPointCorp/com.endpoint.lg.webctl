@@ -19,12 +19,20 @@
  * 
  * @author Matt Vollrath <matt@endpoint.com>
  */
-function PlanetController($scope, $rootScope, UIEvents) {
+function PlanetController($scope, $rootScope, UIEvents, PoiService) {
+
+  // When the PoiService refreshes, we need to know about it
+  var setupPoiPages = function () { $scope.pages = PoiService.pages; };
+  $scope.$watch(
+    function() { return PoiService.pages; },
+    setupPoiPages
+  );
+  setupPoiPages();
 
   /**
    * Broadcast planet selections. 
    */
-  $scope.selectPlanet = function(planet) {
-    $rootScope.$broadcast(UIEvents.Planet.SelectPlanet, planet);
+  $scope.selectPage = function(page) {
+    $rootScope.$broadcast(UIEvents.Page.SelectPage, page);
   }
 }

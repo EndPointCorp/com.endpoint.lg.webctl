@@ -23,10 +23,11 @@
  * 
  * @author Matt Vollrath <matt@endpoint.com>
  */
-function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, MapModes, Planets, EarthMessages, StreetViewMessages, UIEvents) {
+function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, MapModes, Planets, EarthMessages, StreetViewMessages, UIEvents, PoiService) {
   $scope.searching = false;
   $scope.zoom = null;
   $scope.planet = Planets.Earth;
+  $scope.page = Planets.Earth;
   $scope.mapMode = MapModes.Earth;
   $scope.activeApp = Apps.Earth;
   $scope.panoData = null;
@@ -38,6 +39,14 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    */
   EarthService.startup();
   StreetViewService.startup();
+
+  var selectFirstPoiPage = function() {
+    if (PoiService.pages.length > 0) {
+      $scope.page = PoiService.pages[0].name;
+    }
+  };
+  $scope.$watch(function() { return PoiService.valid; }, selectFirstPoiPage);
+  selectFirstPoiPage();
 
   /**
    * Control the active app.
@@ -173,8 +182,9 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   /**
    * Handle planet changes from UI.
    */
-  $scope.$on(UIEvents.Planet.SelectPlanet, function($event, planet) {
-    $scope.planet = planet;
+  $scope.$on(UIEvents.Page.SelectPage, function($event, page) {
+    $scope.page = page;
+    $scope.planet = PoiService.lookupPage(page).planet;
   });
 
   /**

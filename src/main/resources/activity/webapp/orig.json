@@ -1,4 +1,6 @@
-{ "earth": [
+{ "Earth": {
+    "planet" : "earth",
+    "points" : [
     { "style": "outdoor", "title": "Tower of Pisa, Pisa", "type": "earth", "abstractView": {
       "type": "lookat",
       "location": {
@@ -74,8 +76,10 @@
     } },
     { "style": "indoor", "title": "State Dining Room,<br />The White House", "type": "streetview", "panoid": "I5NDPRik49udZwxm4LYdCQ", "heading": "90" },
     { "style": "ocean", "title": "Playful Sea Lions, Galapagos", "type": "streetview", "panoid": "0yfJCnICQIUAAAQIt--IJw", "heading": "54" }
-  ],
-  "moon": [
+  ]},
+  "Moon": {
+    "planet" : "moon",
+    "points": [
     { "style": "outdoor", "title": "Apollo 11", "type": "earth" },
     { "style": "outdoor", "title": "Mare Ingenii", "type": "earth" },
     { "style": "outdoor", "title": "Lacus Excellentiae", "type": "earth" },
@@ -83,8 +87,10 @@
     { "style": "outdoor", "title": "Mons Huygens", "type": "earth" },
     { "style": "outdoor", "title": "Montes Riphaeus", "type": "earth" },
     { "style": "outdoor", "title": "Rima Cleopatra", "type": "earth" }
-  ],
-  "mars": [
+  ]},
+  "Mars": {
+    "planet" : "mars",
+    "points": [
     { "style": "outdoor", "title": "Curiosity Landing Site", "type": "earth" },
     { "style": "outdoor", "title": "Opportunity Landing Site", "type": "earth" },
     { "style": "outdoor", "title": "Olympus Mons", "type": "earth" },
@@ -93,3 +99,4 @@
     { "style": "outdoor", "title": "Chasma Boreale", "type": "earth" },
     { "style": "outdoor", "title": "Valles Marineris", "type": "earth" }
   ]}
+}

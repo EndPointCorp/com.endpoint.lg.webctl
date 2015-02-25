@@ -46,7 +46,7 @@ function MapModeController($scope, $rootScope, MapConfig, MapModes, Planets, Str
   /**
    * Handle planet selections from UI.
    */
-  $scope.$on(UIEvents.Planet.SelectPlanet, function() {
+  $scope.$on(UIEvents.Page.SelectPage, function() {
     $scope.selectMode(MapModes.Earth);
   });
 
