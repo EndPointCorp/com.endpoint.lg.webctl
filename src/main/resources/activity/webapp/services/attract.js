@@ -1,14 +1,28 @@
-LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $timeout, PoiService) {
+LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $timeout, PoiService, StreetViewMessages) {
     var initialDelay = 4000;  // Delay between loading page and the first time it sets up the timer
 
-        // XXX Change these to something bigger for production
-    var attractLoopTimeout = 5000;  // How long to wait for some UI activity before starting the loop
-    var attractPointDelay  = 5000;  // How long to wait between points in the loop
+    var attractLoopTimeout = 5 * 60 * 1000;  // How long to wait for some UI activity before starting the loop
+    var attractPointDelay  = 30 * 1000;      // How long to wait between points in the loop
+    var ignoreMsgInterval  = 500;            // How long to ignore incoming messages after we switch to a
+                                             // new point in the attract loop. This prevents the attract loop
+                                             // from thinking its own navigation is from a user, and
+                                             // turning itself off. XXX HACK!!1 But it seems to work ok XXX
+
+    if (IS.Configuration.hasOwnProperty('attractLoop.timeout')) {
+        attractLoopTimeout = IS.Configuration['attractLoop.timeout'];
+    }
+    if (IS.Configuration.hasOwnProperty('attractLoop.pointDelay')) {
+        attractLoopPointDelay = IS.Configuration['attractLoop.pointDelay'];
+    }
+    if (IS.Configuration.hasOwnProperty('attractLoop.ignoreMsgInterval')) {
+        ignoreMsgInterval = IS.Configuration['attractLoop.ignoreMsgInterval'];
+    }
 
     var attractTimer   = null;
     var nextPointTimer = null;
     var poiContent, poiPages;
     var prevPage = null, prevPoiIndex = null;
+    var ignoreMsg = false;
 
     var nextPoint = function () {
         // Select random POI, different from the one we're currently on, here.
@@ -30,6 +44,8 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
         var poi = poiContent[poiPages[poiPage].name].points[poiIndex];
 
         console.log("Attract loop moving to new POI: " + JSON.stringify(poi));
+        ignoreMsg = true;
+        $timeout(function () { ignoreMsg = false; }, ignoreMsgInterval);
         $rootScope.$broadcast(UIEvents.Poi.SelectPoi, poi);
         nextPointTimer = $timeout(nextPoint, attractPointDelay);
     }
@@ -39,7 +55,7 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
         if (typeof nextPointTimer !== 'undefined') {
             $timeout.cancel(nextPointTimer);
         };
-        nextPointTimer = $timeout(nextPoint, attractPointDelay);
+        nextPoint();
     };
 
     var startTimer = function() {
@@ -54,9 +70,13 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
 
     var watchForMessage = function (a) {
         var m = a;
-        $rootScope.$on(a, function() {
-            console.debug("Attract loop received message " + m);
-            startTimer();
+        $rootScope.$on(a, function(ev, arg) {
+            // This conditional makes sure the attract loop timer doesn't reset
+            // itself with its own messages
+            if (! ignoreMsg) {
+                console.debug("Attract loop resetting timer; received message " + m);
+                startTimer();
+            }
         });
     };
 
@@ -64,6 +84,9 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
         UIEvents.Keyboard.KeyPress,
         UIEvents.Map.ZoomChanged,
         UIEvents.Map.SelectPano,
+        UIEvents.Map.Click,
+        UIEvents.Map.DragStart,
+        UIEvents.Map.DragEnd,
         UIEvents.MapMode.SelectMode,
         UIEvents.Page.SelectPage,
         UIEvents.Poi.SelectPoi,

@@ -68,7 +68,11 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
   },
   Map: {
     ZoomChanged: 'Map.zoomChanged',
-    SelectPano: 'Map.selectPano'
+    SelectPano: 'Map.selectPano',
+        // These are just for the attract loop, to know the user did something
+    Click: 'Map.click',
+    DragStart: 'Map.dragStart',
+    DragEnd: 'Map.dragEnd'
   },
   MapMode: {
     SelectMode: 'MapMode.selectMode'

@@ -138,6 +138,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    * Suspend Earth view sync on map drags.
    */
   google.maps.event.addListener($scope.map, 'dragstart', function() {
+    $rootScope.$broadcast(UIEvents.Map.DragStart, null);
     $scope.startTakeover();
   });
 
@@ -145,6 +146,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    * Suspend Earth view sync on map clicks.
    */
   google.maps.event.addListener($scope.map, 'click', function() {
+    $rootScope.$broadcast(UIEvents.Map.Click, null);
     $scope.startTakeover();
     $scope.endTakeoverSchedule();
   })
@@ -153,6 +155,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    * Resume Earth view sync when map drags finish.
    */
   google.maps.event.addListener($scope.map, 'dragend', function() {
+    $rootScope.$broadcast(UIEvents.Map.DragEnd, null);
     $scope.endTakeoverSchedule();
   });
 
