@@ -100,16 +100,38 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.loadStreetViewPoi = function(poi) {
     var thatPoi = poi;
 
-    $scope.svSvc.getPanoramaById(
-      poi.panoid,
-      function(panoData, stat) {
-        if (stat == google.maps.StreetViewStatus.OK) {
-          $scope.loadPano(panoData, thatPoi.heading);
-        } else {
-          console.error('pano not found:', poi.panoid);
-        }
+    // Redmine 2944 : BUEI wants to fly to new streetview locations by
+    // switching to Earth first, flying to the spot, and then opening
+    // streetview again.
+
+    if (poi.hasOwnProperty('location') && poi.location.hasOwnProperty('latitude') && poi.location.hasOwnProperty('longitude')) {
+      $scope.activeApp = Apps.Earth;
+
+      // (Premature Optimization?) I'm doing this after a few milliseconds to
+      // give the Earth app time to activate before I set its view
+      $timeout( function() {
+        var l = poi.location;
+        var earthQuery = EarthService.generateGroundView(l.latitude, l.longitude, 500);
+        EarthService.setView(earthQuery);
+
+        $scope.svSvc.getPanoramaById(
+          poi.panoid,
+          function(panoData, stat) {
+            if (stat == google.maps.StreetViewStatus.OK) {
+              $timeout(function() {
+                $scope.loadPano(panoData, thatPoi.heading);
+              }, 3000);
+            } else {
+              console.error('pano not found:', poi.panoid);
+            }
+          }
+        ),
+        200
       }
-    );
+    }
+    else {
+      console.log("Can't fly Earth to this poi, because it has no coordinate information");
+    }
   }
 
   /**
