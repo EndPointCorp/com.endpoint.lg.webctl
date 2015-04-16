@@ -127,7 +127,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
           }
         ),
         200
-      }
+      });
     }
     else {
       console.log("Can't fly Earth to this poi, because it has no coordinate information");
