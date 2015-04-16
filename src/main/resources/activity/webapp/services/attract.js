@@ -1,4 +1,4 @@
-LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $timeout, PoiService, StreetViewMessages) {
+LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $timeout, PoiService) {
     var initialDelay = 4000;  // Delay between loading page and the first time it sets up the timer
 
     var attractLoopTimeout = 5 * 60 * 1000;  // How long to wait for some UI activity before starting the loop
@@ -92,7 +92,13 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
         UIEvents.Poi.SelectPoi,
         UIEvents.Search.Query,
         UIEvents.Search.Activated,
-        UIEvents.Search.Deactivated
+        UIEvents.Search.Deactivated,
+            // XXX Hack!!1 These shouldn't be hardcoded strings, but I can't
+            // get the dependency injection to give me the StreetViewMessages
+            // or EarthMessages, and this has to get done now.
+        'StreetView.panoChanged',
+        'StreetView.povChanged',
+        'Earth.viewChanged'
     ];
 
     for (var i = 0; i < events.length; i++) {
