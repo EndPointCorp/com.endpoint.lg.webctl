@@ -23,7 +23,7 @@
  * 
  * @author Matt Vollrath <matt@endpoint.com>
  */
-function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, BrowserService, Apps, MapModes, Planets, EarthMessages, StreetViewMessages, UIEvents, PoiService, AttractLoopService) {
+function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, MapModes, Planets, EarthMessages, StreetViewMessages, UIEvents, PoiService, AttractLoopService) {
   $scope.searching = false;
   $scope.zoom = null;
   $scope.planet = Planets.Earth;
@@ -55,15 +55,9 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     if (app == Apps.Earth) {
       EarthService.activate();
       StreetViewService.deactivate();
-      BrowserService.deactivate();
     } else if (app == Apps.StreetView) {
       StreetViewService.activate();
       EarthService.deactivate();
-      BrowserService.deactivate();
-    } else if (app = Apps.Pano) {
-      BrowserService.activate();
-      EarthService.deactivate();
-      StreetViewService.deactivate();
     }
   });
 
@@ -80,7 +74,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   /**
    * Loads the given Street View panorama, optionally with a heading.
    */
-  $scope.loadStreetViewPano = function(panoData, heading) {
+  $scope.loadPano = function(panoData, heading) {
     // TODO: abstract number validation
     if (!isNaN(parseFloat(heading)) && isFinite(heading)) {
       StreetViewService.setPov({heading: heading, pitch: 0});
@@ -125,8 +119,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
           function(panoData, stat) {
             if (stat == google.maps.StreetViewStatus.OK) {
               $timeout(function() {
-                $scope.activeApp = Apps.StreetView;
-                $scope.loadStreetViewPano(panoData, thatPoi.heading);
+                $scope.loadPano(panoData, thatPoi.heading);
               }, 3000);
             } else {
               console.error('pano not found:', poi.panoid);
@@ -141,19 +134,12 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     }
   }
 
-  $scope.loadPanoPoi = function (poi) {
-    // 1) activate the browser window, pointed at the pano viewer URL
-    $scope.activeApp = Apps.Pano;
-    // 2) send a msg to the pano viewer activity selecting the pano
-  };
-
   /**
    * Routing for POI handlers.
    */
   $scope.poiHandlers = {
     earth: $scope.loadEarthPoi,
-    streetview: $scope.loadStreetViewPoi,
-    pano: $scope.loadPanoPoi
+    streetview: $scope.loadStreetViewPoi
   };
 
   /**
@@ -186,7 +172,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.$on(UIEvents.Map.SelectPano, function($event, panoData) {
     console.log('loading pano', panoData);
 
-    $scope.loadStreetViewPano(panoData);
+    $scope.loadPano(panoData);
   });
 
   /**
