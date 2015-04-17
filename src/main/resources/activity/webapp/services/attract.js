@@ -70,13 +70,36 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
 
     var watchForMessage = function (a) {
         var m = a;
+        var lastView;
+        var changedLimit = .01;
+
         $rootScope.$on(a, function(ev, arg) {
             // This conditional makes sure the attract loop timer doesn't reset
             // itself with its own messages
             if (! ignoreMsg) {
-                console.debug("Attract loop resetting timer; received message " + m);
-                startTimer();
-            }
+                    // XXX More hacks, because we have to get this done
+                if (ev.name !== 'Earth.viewChanged' || typeof(lastView) === 'undefined' ||
+                    lastView.planet !== arg.planet ||
+                    Math.abs(lastView.altitude  - arg.altitude)  > changedLimit ||
+                    Math.abs(lastView.heading   - arg.heading)   > changedLimit ||
+                    Math.abs(lastView.latitude  - arg.latitude)  > changedLimit ||
+                    Math.abs(lastView.longitude - arg.longitude) > changedLimit ||
+                    Math.abs(lastView.range     - arg.range)     > changedLimit ||
+                    Math.abs(lastView.roll      - arg.roll)      > changedLimit ||
+                    Math.abs(lastView.tilt      - arg.tilt)      > changedLimit ||
+                    Math.abs(lastView.timeend   - arg.timeend)   > changedLimit ||
+                    Math.abs(lastView.timestart - arg.timestart) > changedLimit
+                ) {
+                    console.debug("Attract loop resetting timer; received message " + m);
+                    startTimer();
+                };
+                if (ev.name === 'Earth.viewChanged') {
+                    lastView = arg;
+                };
+                // If I've just reset, I don't need to capture *every* new message for a little bit, to save cycles.
+                ignoreMsg = true;
+                $timeout(function () { ignoreMsg = false; }, 200);
+            };
         });
     };
 
