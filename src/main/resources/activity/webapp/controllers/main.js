@@ -23,7 +23,7 @@
  * 
  * @author Matt Vollrath <matt@endpoint.com>
  */
-function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, MapModes, Planets, EarthMessages, StreetViewMessages, UIEvents, PoiService, AttractLoopService) {
+function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, MapModes, Planets, EarthMessages, StreetViewMessages, UIEvents, PoiService, AttractLoopService, MessageService) {
   $scope.searching = false;
   $scope.zoom = null;
   $scope.planet = Planets.Earth;
@@ -33,6 +33,13 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.panoData = null;
 
   $scope.svSvc = new google.maps.StreetViewService();
+
+  /**
+   * Let the app know when spacenav movement happens
+   */
+  MessageService.on('spacenav', function(viewSyncState) {
+    $rootScope.$broadcast('spacenav', '');
+  });
 
   /**
    * Initialize the activities.
@@ -47,6 +54,10 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   };
   $scope.$watch(function() { return PoiService.valid; }, selectFirstPoiPage);
   selectFirstPoiPage();
+
+  $scope.notifyClick = function() {
+    $rootScope.$broadcast('body-click', {});
+  }
 
   /**
    * Control the active app.
@@ -107,11 +118,12 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     if (poi.hasOwnProperty('location') && poi.location.hasOwnProperty('latitude') && poi.location.hasOwnProperty('longitude')) {
       $scope.activeApp = Apps.Earth;
 
-      // (Premature Optimization?) I'm doing this after a few milliseconds to
-      // give the Earth app time to activate before I set its view
+      // (Premature Optimization?) I'm doing this after a while to give the
+      // Earth app time to activate before I set its view
       $timeout( function() {
         var l = poi.location;
-        var earthQuery = EarthService.generateGroundView(l.latitude, l.longitude, 500);
+                                                            // X * 1 makes 'em numbers, not strings
+        var earthQuery = EarthService.generateGroundView(l.latitude * 1, l.longitude * 1, 500);
         EarthService.setView(earthQuery);
 
         $scope.svSvc.getPanoramaById(
@@ -125,9 +137,10 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
               console.error('pano not found:', poi.panoid);
             }
           }
-        ),
-        200
-      });
+        );
+      },
+        1000
+      );
     }
     else {
       console.log("Can't fly Earth to this poi, because it has no coordinate information");
