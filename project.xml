@@ -10,13 +10,13 @@ Serves a web interface for the Liquid Galaxy.
 
   <resources>
     <resource destinationDirectory="webapp/lib"
-      sourceDirectory="${project.home}/../resources/web/js/is" />
+      sourceDirectory="${project.home}/../activity-resources/web/js/is" />
     <resource destinationDirectory="webapp/fonts"
-      sourceFile="${project.home}/../resources/web/fonts/opensans_regular.ttf" />
+      sourceFile="${project.home}/../activity-resources/web/fonts/opensans_regular.ttf" />
     <resource destinationDirectory="webapp/images"
-      sourceDirectory="${project.home}/../resources/web/images/webctl" />
+      sourceDirectory="${project.home}/../activity-resources/web/images/webctl" />
     <resource destinationDirectory="webapp_buei/lib"
-      sourceDirectory="${project.home}/../resources/web/js/is" />
+      sourceDirectory="${project.home}/../activity-resources/web/js/is" />
   </resources>
 
   <deployments>
