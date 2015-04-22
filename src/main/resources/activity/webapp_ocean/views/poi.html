@@ -4,7 +4,7 @@
       <img ng-src="images/poi/{{poi.image}}" ng-class="{selected: $index==selectedIndex}" ng-show="poi.title" alt="{{poi.title}}"/>
     </li>
   </ul>
-  <video ng-class="poi_video">
+  <video ng-class="poi_video" autoplay loop>
     <source src="images/buei_background.mp4" type="video/mp4" />
   </video>
 </div>
