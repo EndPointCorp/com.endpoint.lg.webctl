@@ -1,0 +1,224 @@
+{ "Earth": {
+    "planet" : "earth",
+    "points" : [
+    { "style": "outdoor", "title": "Tower of Pisa, Pisa", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 28.58164049751593,
+        "latitude": 43.72294597791009,
+        "longitude": 10.39670539535571
+      },
+      "orientation": {
+        "heading": -80.41521503853949,
+        "range": 139.75740405485944,
+        "tilt": 72.66275673973938
+      },
+      "altitudeMode": "relativeToSeaFloor"
+    } },
+    { "style": "outdoor", "title": "Eiffel Tower, Paris", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": 48.86067281595832,
+        "longitude": 2.292014985093174
+      },
+      "orientation": {
+        "heading": -30.82811991881539,
+        "range": 870.2504450963008,
+        "tilt": 68.12334319265283
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "street", "title": "Sunset Boulevard, Los Angeles", "type": "streetview", "panoid": "o4yrNps7LEEGNTssM-xiDg", "heading": 50 },
+    { "style": "ocean", "title": "Heron Island, Great Barrier Reef", "type": "streetview", "panoid": "CWskcsTEZBNXaD8gG-zATA", "heading": -25 },
+    { "style": "outdoor", "title": "Stonehenge, Wiltshire", "type": "earth", "abstractView": {
+      "type": "camera",
+      "location": {
+        "altitude": 6.235463957643131,
+        "latitude": 51.17885614970503,
+        "longitude": -1.825937904608913
+      },
+      "orientation": {
+        "heading": -87.65004513518046,
+        "tilt": 82.84456584198047,
+        "roll": 0
+      },
+      "altitudeMode": "relativeToSeaFloor"
+    } },
+    { "style": "outdoor", "title": "Mount Misen, Hiroshima", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": 34.29760881139214,
+        "longitude": 132.3182374372446
+      },
+      "orientation": {
+        "heading": 173.5020669569355,
+        "range": 69.31842303519369,
+        "tilt": 82.5619204869066
+      },
+      "altitudeMode": "relativeToSeaFloor"
+    } },
+    { "style": "indoor", "title": "Opera House, Sydney", "type": "streetview", "panoid": "yr58FW-eQtEAAAQW4fRy2g", "heading": 180 },
+    { "style": "outdoor", "title": "The Grand Canyon, Arizona", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": 36.03873353926406,
+        "longitude": -111.8889022015411
+      },
+      "orientation": {
+        "heading": -85.87896607649738,
+        "range": 5355.631620407577,
+        "tilt": 67.92562079561495
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "indoor", "title": "State Dining Room,<br />The White House", "type": "streetview", "panoid": "I5NDPRik49udZwxm4LYdCQ", "heading": 90 },
+    { "style": "ocean", "title": "Playful Sea Lions, Galapagos", "type": "streetview", "panoid": "0yfJCnICQIUAAAQIt--IJw", "heading": 54 }
+  ]},
+  "Moon": {
+    "planet" : "moon",
+    "points": [
+    { "style": "outdoor", "title": "Apollo 11", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": 0.6818690701373029,
+        "longitude": 23.46023322757257
+      },
+      "orientation": {
+        "heading": 55.56025577175851,
+        "range": 64.60575653701883,
+        "tilt": 70.44457090053699
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "outdoor", "title": "Apollo 12", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": -3.025568845799381,
+        "longitude": -23.46175860219994 
+      },
+      "orientation": {
+        "heading": 136.2370857550598,
+        "range": 78.4158621426043,
+        "tilt": 61.35959025341867
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "outdoor", "title": "Apollo 14", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": -3.651647982786785,
+        "longitude": -17.49489422538602
+      },
+      "orientation": {
+        "heading": 69.26000464999706,
+        "range": 43.39237703401442,
+        "tilt": 65.07392961713315
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "outdoor", "title": "Apollo 15", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": 26.02129553290783,
+        "longitude": 3.502022352559111
+      },
+      "orientation": {
+        "heading": -132.1084656226968,
+        "range": 8491.436241658754,
+        "tilt": 69.4012043918584
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "outdoor", "title": "Apollo 16", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": -8.990145821093558,
+        "longitude": 15.47469989161034
+      },
+      "orientation": {
+        "heading": -95.13734615159895,
+        "range": 33.19016992229445,
+        "tilt": 68.40394799225787
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "outdoor", "title": "Apollo  17", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": 20.19205371110379,
+        "longitude": 30.7631530554148
+      },
+      "orientation": {
+        "heading": -92.09520695772345,
+        "range": 311.1559410430297,
+        "tilt": 69.8876630498702
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "outdoor", "title": "Surveyor 3", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": -3.027430477637387,
+        "longitude": -23.45919223319664
+      },
+      "orientation": {
+        "heading": -54.41843612519305,
+        "range": 82.47600483700177,
+        "tilt": 63.58473046334316
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "outdoor", "title": "Luna 17 + Lunakhod", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": 38.27891541033399,
+        "longitude": -34.99832550354183
+      },
+      "orientation": {
+        "heading": 128.2462735593615,
+        "range": 60.3846576951117,
+        "tilt": 86.57004618165323
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "outdoor", "title": "Luna 21 + Lunakhod 2", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": 25.85380231354238,
+        "longitude": 30.65624286552221
+      },
+      "orientation": {
+        "heading": -0.07257313800190887,
+        "range": 15411.40489768634,
+        "tilt": 0
+      },
+      "altitudeMode": "relativeToGround"
+    } },
+    { "style": "outdoor", "title": "Luna 24", "type": "earth", "abstractView": {
+      "type": "lookat",
+      "location": {
+        "altitude": 0,
+        "latitude": 12.75044214452487,
+        "longitude": 62.19994118888357
+      },
+      "orientation": {
+        "heading": -1.522203115392835,
+        "range": 18.91056852561078,
+        "tilt": 79.71161417256202
+      },
+      "altitudeMode": "relativeToGround"
+    } }
+  ]}
+}

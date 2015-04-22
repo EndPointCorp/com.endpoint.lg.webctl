@@ -1,0 +1,5 @@
+<div id="planet" ng-controller="PlanetController">
+   <div ng-repeat="p in pages" ng-class="page == p.name ? p.planet_hl : p.planet" ng-click="selectPage(p.name)">
+     <span ng-class="{selected: selectedPlanet==p.name}">{{ p.name }}</span>
+   </div>
+</div>

@@ -6,7 +6,7 @@ Serves a web interface for the Liquid Galaxy.
   </description>
 
   <identifyingName>com.endpoint.lg.webctl</identifyingName>
-  <version>1.0.0.dev</version>
+  <version>1.0.1</version>
 
   <resources>
     <resource destinationDirectory="webapp/lib"
@@ -15,6 +15,8 @@ Serves a web interface for the Liquid Galaxy.
       sourceFile="${project.home}/../resources/web/fonts/opensans_regular.ttf" />
     <resource destinationDirectory="webapp/images"
       sourceDirectory="${project.home}/../resources/web/images/webctl" />
+    <resource destinationDirectory="webapp_buei/lib"
+      sourceDirectory="${project.home}/../resources/web/js/is" />
   </resources>
 
   <deployments>

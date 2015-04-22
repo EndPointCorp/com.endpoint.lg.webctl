@@ -1,0 +1,26 @@
+{ "West": {
+    "planet" : "earth",
+    "points" : [
+      { "style": "ocean", "title": "Emily's Pinnacles, Bermuda", "type": "streetview", "panoid": "JTkIzW2WgsAAAAQJOJIx9A", "location": { "latitude": "32.235303", "longitude": "64.84837099999999" }, "heading": "140" },
+      { "style": "ocean", "title": "Hourglass Reef, Bermuda", "type": "streetview", "panoid": "3keLwG0w2s4AAAQJOJIuOg", "location": { "latitude": "32.347161", "longitude": "-64.6499" }, "heading": "1" },
+      { "style": "ocean", "title": "Mary Celeste Wreck, Bermuda", "type": "streetview", "panoid": "i1i4NPuJaqkAAAQJOJMqGw", "location": { "latitude": "32.242052", "longitude": "-64.831613" }, "heading": "185" },
+      { "style": "ocean", "title": "North East Breaker, Bermuda", "type": "streetview", "panoid": "PkL4Nl8xqLgAAAQJOJI4ug", "location": { "latitude": "32.483174", "longitude": "-64.68519000000003" }, "heading": "307" },
+      { "style": "ocean", "title": "South West Breaker, Bermuda", "type": "streetview", "panoid": "CBQIyPaY6qoAAAQJOJIv_g", "location": { "latitude": "32.229824", "longitude": "-64.86574300000001" }, "heading": "47" },
+      { "style": "ocean", "title": "Champion Island East, Galapagos", "type": "streetview", "panoid": "HmAzFa5H7IEAAAQIt-rwjQ", "location": { "latitude": "-1.238894", "longitude": "-90.38423899999998" }, "heading": "322" },
+      { "style": "ocean", "title": "Playful Sea Lions, Galapagos", "type": "streetview", "panoid": "0yfJCnICQIUAAAQIt--IJw", "location": { "latitude": "-1.239102", "longitude": "-90.38565599999998" }, "heading": "54" },
+      { "style": "ocean", "title": "Aquarius Reef Base, Florida Keys", "type": "streetview", "panoid": "MsYwoi2mM9QAAAQYn9Gl5w", "location": { "latitude": "24.950493", "longitude": "-80.454069" }, "heading": "136" }
+    ]
+  },
+  "East": {
+    "planet" : "earth",
+    "points": [
+      { "style": "ocean", "title": "Yongala Shipwreck, Great Barrier Reef", "type": "streetview", "panoid": "GbPknZsddS4AAAQfCaRxVg", "location": { "latitude": "-19.294378", "longitude": "147.61864200000002" }, "heading": "190" },
+      { "style": "ocean", "title": "Wilson Island, Great Barrier Reef", "type": "streetview", "panoid": "TNE1NPAnEUNYhGk9kFWyJw", "location": { "latitude": "-23.303391", "longitude": "151.91495499999996" }, "heading": "298" },
+      { "style": "ocean", "title": "Ribbon Reef 10, Great Barrier Reef", "type": "streetview", "panoid": "w3HFBxZBYgEAAAQfCamUng", "location": { "latitude": "-14.92014", "lon": "145.700062" }, "heading": "93" },
+      { "style": "ocean", "title": "Heron Island, Great Barrier Reef", "type": "streetview", "panoid": "CWskcsTEZBNXaD8gG-zATA", "location": { "latitude": "-23.442896", "longitude": "151.90658400000007" }, "heading": "-25" },
+      { "style": "ocean", "title": "Osprey Reef, Coral Sea", "type": "streetview", "panoid": "UC39RZSwIhYAAAQfCbAHrw", "location": { "latitude": "-13.805452", "longitude": "146.57245799999998" }, "heading": "358" },
+      { "style": "ocean", "title": "Apo Island, Phillipines", "type": "streetview", "panoid": "LlWBCazw4YZXBkEB7WXVqw", "location": { "latitude": "9.085239", "longitude": "123.27241400000003" }, "heading": "335" },
+      { "style": "ocean", "title": "Komodo Islands, Indonesia", "type": "streetview", "panoid": "Ri71LYeNvGsAAAQW4U3bQQ", "location": { "latitude": "-8.737039", "longitude": "119.41225899999995" }, "heading": "231" }
+    ]
+  }
+}
