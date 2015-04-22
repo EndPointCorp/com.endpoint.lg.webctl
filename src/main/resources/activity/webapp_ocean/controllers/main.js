@@ -31,6 +31,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.mapMode = MapModes.Earth;
   $scope.activeApp = Apps.Earth;
   $scope.panoData = null;
+  $scope.poi_diving = false;
 
   $scope.svSvc = new google.maps.StreetViewService();
 

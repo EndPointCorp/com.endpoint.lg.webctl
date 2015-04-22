@@ -1,7 +1,0 @@
-<div id="poi" ng-controller="PoiController">
-  <ul ng-class="planet">
-    <li ng-repeat="poi in content" ng-class="[poi.style, 'curve'+$index]" ng-click="selectPoi($index, poi)">
-      <span ng-class="{selected: $index==selectedIndex}" ng-show="poi.title" ng-bind-html="poi.title"></span>
-    </li>
-  </ul>
-</div>

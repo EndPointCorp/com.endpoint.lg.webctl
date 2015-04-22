@@ -22,6 +22,10 @@
 function PoiController($scope, $rootScope, $sanitize, PoiService, UIEvents) {
   $scope.selectedIndex = null;
 
+  $scope.checkVisibility = function() {
+    return $scope.poi_diving;
+  };
+
   var setupPoiContent = function() {
       if (typeof(PoiService.content) !== 'undefined' && PoiService.content.hasOwnProperty($scope.page)) {
           $scope.content = PoiService.content[$scope.page].points;
