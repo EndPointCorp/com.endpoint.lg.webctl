@@ -103,6 +103,60 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     $scope.activeApp = Apps.Earth;
   }
 
+  var arrivedAtStreetViewPano = function(l, t, found, error, panoData, poi) {
+    if (typeof(l) !== 'undefined') {
+      l();
+    }
+    if (typeof(t) !== 'undefined') {
+      $timeout.cancel(l);
+    }
+
+    $scope.loadPano(panoData, poi.heading);
+  }
+
+  var transitionToStreetViewPano = function(poi) {
+    var panoData;
+    var found = false, error = false;
+    var deregisterListener, timeout;
+    var marginOfError = 0.3; // When Earth gets within this many degrees of its target, we'll switch to street view
+                                                        // X * 1 makes 'em numbers, not strings
+    var earthQuery = EarthService.generateGroundView(poi.location.latitude * 1, poi.location.longitude * 1, 500);
+    EarthService.setView(earthQuery);
+ 
+    $scope.svSvc.getPanoramaById(
+      poi.panoid,
+      function(data, stat) {
+        if (stat == google.maps.StreetViewStatus.OK) {
+          panoData = data;
+          found = true;
+        } else {
+          console.error('pano not found:', poi.panoid);
+          error = true;
+        }
+      }
+    );
+
+    deregisterListener = $rootScope.$on(EarthMessages.ViewChanged, function(ev, coords) {
+      // Check coordinates to see if they're "close enough" to the POI
+      if (Math.abs(coords.latitude - (poi.location.latitude * 1)) <= marginOfError &&
+          Math.abs(coords.longitude - (poi.location.longitude * 1)) <= marginOfError) {
+        console.log("We're close enough!");
+        console.log(poi.location);
+        console.log(coords);
+        arrivedAtStreetViewPano(deregisterListener, timeout, found, error, panoData, poi);
+      }
+    });
+
+    // In case we never get there, eventually switch to street view anyway
+    timeout = $timeout(function() {
+      // Switch to street view if we haven't already
+      if ($scope.activeApp !== Apps.StreetView) {
+        console.log("We haven't switched to street view yet; do it now");
+        arrivedAtStreetViewPano(deregisterListener, timeout, found, error, panoData, poi);
+      }
+    }, 10000);
+  }
+
   /**
    * Loads the given Street View Point of Interest.
    *
@@ -118,29 +172,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     if (poi.hasOwnProperty('location') && poi.location.hasOwnProperty('latitude') && poi.location.hasOwnProperty('longitude')) {
       $scope.activeApp = Apps.Earth;
 
-      // (Premature Optimization?) I'm doing this after a while to give the
-      // Earth app time to activate before I set its view
-      $timeout( function() {
-        var l = poi.location;
-                                                            // X * 1 makes 'em numbers, not strings
-        var earthQuery = EarthService.generateGroundView(l.latitude * 1, l.longitude * 1, 500);
-        EarthService.setView(earthQuery);
-
-        $scope.svSvc.getPanoramaById(
-          poi.panoid,
-          function(panoData, stat) {
-            if (stat == google.maps.StreetViewStatus.OK) {
-              $timeout(function() {
-                $scope.loadPano(panoData, thatPoi.heading);
-              }, 3000);
-            } else {
-              console.error('pano not found:', poi.panoid);
-            }
-          }
-        );
-      },
-        1000
-      );
+      $timeout( transitionToStreetViewPano(thatPoi), 1000);
     }
     else {
       console.log("Can't fly Earth to this poi, because it has no coordinate information");
