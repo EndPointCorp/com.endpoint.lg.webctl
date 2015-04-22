@@ -1,7 +1,7 @@
 <div id="poi" ng-controller="PoiController" ng-show="checkVisibility()">
   <ul ng-class="planet">
     <li ng-repeat="poi in content" ng-class="[poi.style, 'seaview'+$index]" ng-click="selectPoi($index, poi)">
-      <span ng-class="{selected: $index==selectedIndex}" ng-show="poi.title" ng-bind-html="poi.title"></span>
+      <img ng-src="images/poi/{{poi.image}}" ng-class="{selected: $index==selectedIndex}" ng-show="poi.title" alt="{{poi.title}}"/>
     </li>
   </ul>
   <video ng-class="poi_video">
