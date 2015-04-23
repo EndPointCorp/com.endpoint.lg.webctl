@@ -26,6 +26,15 @@ function PoiController($scope, $rootScope, $sanitize, PoiService, UIEvents) {
     return $scope.poi_diving;
   };
 
+  $scope.selectPage = function(p) {
+    $scope.page = p;
+    setupPoiContent();
+  };
+
+  $scope.page_image = function(p) {
+    return 'images/' + p + (p == $scope.page ? '-bright.png' : '-dark.png');
+  }
+    
   var setupPoiContent = function() {
       if (typeof(PoiService.content) !== 'undefined' && PoiService.content.hasOwnProperty($scope.page)) {
           $scope.content = PoiService.content[$scope.page].points;
