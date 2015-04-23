@@ -113,19 +113,35 @@ video {
 #poi {
   position: absolute;
   z-index: 3;
-  top: 95px;
-  /*
-  bottom: 115px;
-  */
-  left: 10px;
+  text-align: center;
+}
+
+#poi-buttons {
+  position: absolute;
+  min-width: 100%; min-height: 100%;
+  width: auto; height: auto; z-index: 10;
+  background: url(../images/catlin_seaview_backdrop.png) no-repeat;
+  background-size: cover;
+/*  margin-top: 230px; */
+}
+
+#poi-buttons>img {
+  margin: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 230px;
+}
+
+#back-to-seaview {
+  z-index: 12;
 }
 
 #poi>ul {
-  margin: auto;
-  padding: 0px;
-  transition: margin-left 0.25s ease-out;
+  margin-left: 360px;
+  margin-right: 360px;
+  margin-top: 460px;
   width: 1200px;
-  /* horizontal-align: center; */
+  text-align: center;
 }
 
 #poi>ul.mars {
@@ -140,7 +156,9 @@ video {
 /*  height: 72px;
   line-height: 72px;
   width: 300px; */
-  padding-left: 75px;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-bottom: 35px;
   margin-bottom: 15px;
   list-style: none;
   background-repeat: no-repeat;
@@ -156,12 +174,22 @@ video {
   line-height: normal;
   vertical-align: middle;
   cursor: default;
-  -webkit-user-select: none;
-  transition: text-shadow 0.25s ease-out;
+  /* -webkit-user-select: none; */
+  transition: box-shadow 0.25s ease-out;
 }
 
 #poi>ul>li>img.selected {
-  text-shadow: 0 0 12px #00FFFF;
+    box-shadow: 0 0 12px #000ffff;
+}
+
+#poi-buttons {
+  width: 1200px;
+  margin: auto auto;
+  text-align: center;
+}
+
+#poi-buttons>img {
+  padding: 10px;
 }
 
 .curve0, .curve9 {
