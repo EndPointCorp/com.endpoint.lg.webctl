@@ -241,18 +241,19 @@ video {
 
 #search>.submit {
   position: absolute;
-  top: 4px;
-  left: 10px;
-  width: 45px;
+  top: 900px;
+  left: -130px;
+  width: 55px;
   height: 55px;
 }
 
 #search>.clear {
   position: absolute;
-  top: 4px;
-  right: 5px;
-  width: 35px;
+  top: 900px;
+  right: 135px;
+  width: 50px;
   height: 50px;
+  color: rgba(0,0,0,0);
 }
 
 #search>button, #search>span {
@@ -266,16 +267,16 @@ video {
 
 #search>input {
   position: absolute;
-  top: 4px;
-  left: 70px;
+  top: 900px;
+  left: -70px;
   height: 50px;
-  width: 208px;
+  width: 220px;
   margin: 0px;
   padding: 0px;
   background: transparent;
   border: none !important;
   outline: none !important;
-  color: #FFFFFF;
+  color: #000000;
   font-family: OpenSans;
   font-size: 22pt;
 }
