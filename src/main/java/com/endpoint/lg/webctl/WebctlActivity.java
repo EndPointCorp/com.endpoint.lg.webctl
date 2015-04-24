@@ -279,7 +279,6 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
         // it for resetting the attract loop
         now = System.currentTimeMillis();
         if (now - 100 > lastSpnavMsg) {
-          getLog().info("Sending spacenav msg");
           JsonBuilder msg =
               MessageWrapper.newTypedMessage("spacenav", json.getCurrentItem());
 
