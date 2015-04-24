@@ -84,5 +84,7 @@ function PoiController($scope, $rootScope, $sanitize, PoiService, UIEvents) {
   $rootScope.$on(UIEvents.Page.SelectPage, function($event, page) {
     $scope.selectNone();
     $scope.content = PoiService.content[page].points;
+    $scope.poi_diving = true;
+    $scope.selectPage(page);
   });
 }
