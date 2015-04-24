@@ -22,9 +22,6 @@ import interactivespaces.service.web.server.WebServer;
 import interactivespaces.util.data.json.JsonNavigator;
 import interactivespaces.util.data.json.JsonBuilder;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Map;
 
 import com.endpoint.lg.support.message.WebsocketMessageHandlers;
@@ -72,7 +69,7 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
 
   private WebConfigHandler configHandler;
 
-  private Calendar lastSpnavMsg;
+  private double lastSpnavMsg;
 
   /**
    * Broadcasts the Earth view state to all websocket clients.
@@ -274,9 +271,21 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
     /**
      * Handle spacenav messages
      */
-    rosHandlers.registerHandler("json", new RosMessageHandler() {
+    rosHandlers.registerHandler("spacenav", new RosMessageHandler() {
       public void handleMessage(JsonNavigator json) {
-        sendAllWebSocketJsonBuilder(json.getCurrentAsJsonBuilder());
+        double now;
+
+        // Don't send *every* spacenav message; we only need
+        // it for resetting the attract loop
+        now = System.currentTimeMillis();
+        if (now - 100 > lastSpnavMsg) {
+          getLog().info("Sending spacenav msg");
+          JsonBuilder msg =
+              MessageWrapper.newTypedMessage("spacenav", json.getCurrentItem());
+
+          sendAllWebSocketJsonBuilder(msg);
+          lastSpnavMsg = now;
+        }
       }
     });
   }
@@ -289,8 +298,7 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
     WebServer webserver = getWebServer();
     configHandler = new WebConfigHandler(getConfiguration());
     webserver.addDynamicContentHandler(CONFIG_HANDLER_PATH, false, configHandler);
-    lastSpnavMsg = new GregorianCalendar();
-    lastSpnavMsg.setTime(new Date());
+    lastSpnavMsg = 0;
   }
 
   /**
@@ -306,21 +314,6 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
    */
   @Override
   public void onNewInputJson(String channel, Map<String, Object> message) {
-    Calendar nowCal = new GregorianCalendar();
-    if (channel.equals("spacenav")) {
-      nowCal.setTime(new Date());
-      nowCal.add(Calendar.MILLISECOND, -100);
-      if (nowCal.after(lastSpnavMsg)) {
-        getLog().info("Sending spacenav msg");
-        JsonBuilder json =
-            MessageWrapper.newTypedMessage("spacenav", message);
-
-        sendAllWebSocketJsonBuilder(json);
-        lastSpnavMsg.setTime(new Date());
-      }
-    }
-    else {
-      rosHandlers.handleMessage(channel, message);
-    }
+    rosHandlers.handleMessage(channel, message);
   }
 }
