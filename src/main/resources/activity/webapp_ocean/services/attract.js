@@ -7,6 +7,11 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
                                              // new point in the attract loop. This prevents the attract loop
                                              // from thinking its own navigation is from a user, and
                                              // turning itself off. XXX HACK!!1 But it seems to work ok XXX
+    var isRunning = false;
+
+    function isAttractLoopRunning() {
+        return isRunning;
+    }
 
     if (IS.Configuration.hasOwnProperty('attractLoop.timeout')) {
         attractLoopTimeout = IS.Configuration['attractLoop.timeout'];
@@ -46,6 +51,7 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
         console.log("Attract loop moving to new POI: " + JSON.stringify(poi));
         ignoreMsg = true;
         $timeout(function () { ignoreMsg = false; }, ignoreMsgInterval);
+        poi.attractLoop = true;
         $rootScope.$broadcast(UIEvents.Poi.SelectPoi, poi);
         nextPointTimer = $timeout(nextPoint, attractPointDelay);
     }
@@ -55,6 +61,7 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
         if (typeof nextPointTimer !== 'undefined') {
             $timeout.cancel(nextPointTimer);
         };
+        isRunning = true;
         nextPoint();
     };
 
@@ -77,6 +84,7 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
             if (! ignoreMsg) {
                 console.debug("Attract loop resetting timer; received message " + m);
                 startTimer();
+                isRunning = false;
 
                 // If I've just reset, I don't need to capture *every* new message for a little bit, to save cycles if messages are coming in quickly.
                 ignoreMsg = true;
@@ -103,4 +111,8 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
     );
 
     $timeout(function() { startTimer() }, initialDelay);
+
+    return {
+        isAttractLoopRunning: isAttractLoopRunning
+    };
 });

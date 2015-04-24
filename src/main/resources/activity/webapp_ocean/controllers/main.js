@@ -112,6 +112,12 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
       $timeout.cancel(l);
     }
 
+    // If the attract loop started this transition, and if the attract loop has
+    // been stopped before we got to this point, don't finish the transition
+    if (poi.attractLoop && ! AttractLoopService.isAttractLoopRunning()) {
+        return;
+    }
+
     $scope.loadPano(panoData, poi.heading);
   }
 
