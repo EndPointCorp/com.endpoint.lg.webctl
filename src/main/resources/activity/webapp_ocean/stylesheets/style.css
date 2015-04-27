@@ -132,8 +132,13 @@ video {
   margin-top: 230px;
 }
 
-#back-to-seaview {
-  z-index: 12;
+.back-button {
+    position: absolute;
+    z-index: 12;
+    width: 180px;
+    height: 180px;
+    left: 1650px;
+    border: 1px solid red;
 }
 
 #poi>ul {
@@ -225,7 +230,7 @@ video {
 }
 
 .street {
-  background-image: url('../images/street.png');
+  background-image: url('../images/street_view.png');
 }
 
 #search {
@@ -306,11 +311,11 @@ video {
 }
 
 #mapmode>.earth {
-  background-image: url('../images/mode_earth.png');
+  background-image: url('../images/satellite_view.png');
 }
 
 #mapmode>.streetview {
-  background-image: url('../images/mode_streetview.png');
+  background-image: url('../images/street_view.png');
 }
 
 #mapmode>.earth_hl {
