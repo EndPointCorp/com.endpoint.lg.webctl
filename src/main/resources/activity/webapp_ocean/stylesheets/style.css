@@ -329,11 +329,11 @@ video {
 #planet {
   position: absolute;
   z-index: 2;
-  top: 950px;
+  top: 850px;
   /*
   bottom: 33px;
   */
-  left: 160px;
+  left: 1640px;
 }
 
 #planet>div {
