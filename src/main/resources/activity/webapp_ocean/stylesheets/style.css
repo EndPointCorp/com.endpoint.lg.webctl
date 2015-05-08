@@ -137,8 +137,8 @@ video {
     z-index: 12;
     width: 180px;
     height: 180px;
-    left: 1650px;
-    border: 1px solid red;
+    left: 1640px;
+    top: 850px;
 }
 
 #poi>ul {
@@ -299,8 +299,8 @@ video {
 #mapmode {
   position: absolute;
   z-index: 2;
-  top: 0px;
-  right: 0px;
+  top: 175px;
+  left: 1680px;
 }
 
 #mapmode>div {
@@ -319,11 +319,11 @@ video {
 }
 
 #mapmode>.earth_hl {
-  background-image: url('../images/mode_earth_hl.png');
+  background-image: url('../images/satellite_view_hl.png');
 }
 
 #mapmode>.streetview_hl {
-  background-image: url('../images/mode_streetview_hl.png');
+  background-image: url('../images/street_view_hl.png');
 }
 
 #planet {
