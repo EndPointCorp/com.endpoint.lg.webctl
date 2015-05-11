@@ -191,10 +191,12 @@ video {
   width: 1200px;
   margin: auto auto;
   text-align: center;
+  pointer-events: none;
 }
 
 #poi-buttons>img {
   padding: 10px;
+  pointer-events: all;
 }
 
 .curve0, .curve9 {
