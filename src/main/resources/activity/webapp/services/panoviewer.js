@@ -1,7 +1,7 @@
 LiquidGalaxyApp.service('PanoViewerService', function($rootScope, MessageService, MasterService, ActivityGroups) {
     var change_pano = function (url, pano_type) {
         console.log("Changing pano to " + url);
-        MessageService.emit('pano_viewsync', {
+        MessageService.emit('pano_change', {
             "src": "touchscreen",
             "extra": {
                 "type": "pano",
@@ -16,7 +16,7 @@ LiquidGalaxyApp.service('PanoViewerService', function($rootScope, MessageService
      */
     function startup() {
         console.debug("Startup pano viewer");
-        MasterService.startupLiveActivityGroupByName(ActivityGroups.Panoviewer);
+        MasterService.startupLiveActivityGroupByName(ActivityGroups.PanoViewer);
     }
   
     /**
@@ -24,7 +24,7 @@ LiquidGalaxyApp.service('PanoViewerService', function($rootScope, MessageService
      */
     function shutdown() {
         console.debug("Shutdown pano viewer");
-        MasterService.shutdownLiveActivityGroupByName(ActivityGroups.Panoviewer);
+        MasterService.shutdownLiveActivityGroupByName(ActivityGroups.PanoViewer);
     }
   
     /**
@@ -32,7 +32,7 @@ LiquidGalaxyApp.service('PanoViewerService', function($rootScope, MessageService
      */
     function activate() {
         console.debug("Activate pano viewer");
-        MasterService.activateLiveActivityGroupByName(ActivityGroups.Panoviewer);
+        MasterService.activateLiveActivityGroupByName(ActivityGroups.PanoViewer);
     }
   
     /**
@@ -40,7 +40,7 @@ LiquidGalaxyApp.service('PanoViewerService', function($rootScope, MessageService
      */
     function deactivate() {
         console.debug("Deactivate pano viewer");
-        MasterService.deactivateLiveActivityGroupByName(ActivityGroups.Panoviewer);
+        MasterService.deactivateLiveActivityGroupByName(ActivityGroups.PanoViewer);
     }
 
     return {

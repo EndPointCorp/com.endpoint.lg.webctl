@@ -186,12 +186,19 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     }
   }
 
+  $scope.loadPanoPoi = function(poi) {
+    console.log("Loading pano poi " + poi);
+    PanoViewerService.change_pano(poi.fileurl, poi.pano_type);
+    $scope.activeApp = Apps.PanoViewer;
+  }
+
   /**
    * Routing for POI handlers.
    */
   $scope.poiHandlers = {
     earth: $scope.loadEarthPoi,
-    streetview: $scope.loadStreetViewPoi
+    streetview: $scope.loadStreetViewPoi,
+    panoviewer: $scope.loadPanoPoi
   };
 
   /**

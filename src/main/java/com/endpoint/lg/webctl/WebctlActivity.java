@@ -150,9 +150,14 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
 
     /**
      * Handle pano viewer stuff
+     *
+     * Can't use relayWebsocketToRos() because it creates a new TypedMessage, which this already will be.
      */
-    relayWebsocketToRos(websocketHandlers, MessageTypesPanoviewer.MESSAGE_TYPE_VIEWSYNC,
-            MessageTypesPanoviewer.MESSAGE_TYPE_VIEWSYNC, "panoviewer");
+    websocketHandlers.registerHandler(MessageTypesPanoviewer.MESSAGE_TYPE_CHANGEPANO, new WebsocketMessageHandler() {
+      public void handleMessage(String connectionId, JsonNavigator json) {
+        sendOutputJson("panoviewer", json.getRoot());
+      }
+    });
 
     /**
      * Handle Street View activation requests from websockets.

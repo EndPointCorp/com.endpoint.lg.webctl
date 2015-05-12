@@ -1,6 +1,7 @@
 { "Earth": {
     "planet" : "earth",
     "points" : [
+    { "style": "outdoor", "title": "Grand Canyon Pano", "type": "panoviewer", "pano_type": "image", "fileurl": "http://localhost:8082/grand-canyon-pano.jpg" },
     { "style": "outdoor", "title": "Tower of Pisa, Pisa", "type": "earth", "abstractView": {
       "type": "lookat",
       "location": {
@@ -74,7 +75,6 @@
       },
       "altitudeMode": "relativeToGround"
     } },
-    { "style": "indoor", "title": "State Dining Room,<br />The White House", "type": "streetview", "panoid": "I5NDPRik49udZwxm4LYdCQ", "heading": 90 },
     { "style": "ocean", "title": "Playful Sea Lions, Galapagos", "type": "streetview", "panoid": "0yfJCnICQIUAAAQIt--IJw", "heading": 54 }
   ]},
   "Moon": {
