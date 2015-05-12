@@ -29,6 +29,7 @@ import com.endpoint.lg.support.message.WebsocketMessageHandler;
 import com.endpoint.lg.support.message.RosMessageHandlers;
 import com.endpoint.lg.support.message.RosMessageHandler;
 import com.endpoint.lg.support.message.MessageWrapper;
+import com.endpoint.lg.support.message.panoviewer.MessageTypesPanoviewer;
 import com.endpoint.lg.support.message.earthQuery.MessageTypesQuery;
 import com.endpoint.lg.support.domain.streetview.StreetviewPov;
 import com.endpoint.lg.support.domain.streetview.StreetviewPano;
@@ -111,13 +112,6 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
   }
 
   /**
-   * Sends a query to Earth's query interface.
-   */
-  private void sendQuery(JsonBuilder message) {
-    sendOutputJsonBuilder("query", message);
-  }
-
-  /**
    * Sets up message handlers. Most handlers simply relay information from Ros
    * to the websocket clients or vice versa.
    */
@@ -148,43 +142,17 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
     });
 
     /**
-     * Handle Earth view changes from websockets.
+     * Handle Earth view and planet changes, and search queries from websockets.
      */
-    websocketHandlers.registerHandler(WS_EARTH_SET_VIEW, new WebsocketMessageHandler() {
-      public void handleMessage(String connectionId, JsonNavigator json) {
-        JsonBuilder message =
-            MessageWrapper.newTypedMessage(MessageTypesQuery.MESSAGE_TYPE_QUERYFILE_FLYTO,
-                json.getCurrentItem());
-
-        sendQuery(message);
-      }
-    });
+    relayWebsocketToRos(websocketHandlers, WS_EARTH_SET_VIEW,   MessageTypesQuery.MESSAGE_TYPE_QUERYFILE_FLYTO,  "query");
+    relayWebsocketToRos(websocketHandlers, WS_EARTH_SET_PLANET, MessageTypesQuery.MESSAGE_TYPE_QUERYFILE_PLANET, "query");
+    relayWebsocketToRos(websocketHandlers, WS_EARTH_SEARCH,     MessageTypesQuery.MESSAGE_TYPE_QUERYFILE_SEARCH, "query");
 
     /**
-     * Handle Earth planet changes from websockets.
+     * Handle pano viewer stuff
      */
-    websocketHandlers.registerHandler(WS_EARTH_SET_PLANET, new WebsocketMessageHandler() {
-      public void handleMessage(String connectionId, JsonNavigator json) {
-        JsonBuilder message =
-            MessageWrapper.newTypedMessage(MessageTypesQuery.MESSAGE_TYPE_QUERYFILE_PLANET,
-                json.getCurrentItem());
-
-        sendQuery(message);
-      }
-    });
-
-    /**
-     * Handle Earth search queries from websockets.
-     */
-    websocketHandlers.registerHandler(WS_EARTH_SEARCH, new WebsocketMessageHandler() {
-      public void handleMessage(String connectionId, JsonNavigator json) {
-        JsonBuilder message =
-            MessageWrapper.newTypedMessage(MessageTypesQuery.MESSAGE_TYPE_QUERYFILE_SEARCH,
-                json.getCurrentItem());
-
-        sendQuery(message);
-      }
-    });
+    relayWebsocketToRos(websocketHandlers, MessageTypesPanoviewer.MESSAGE_TYPE_VIEWSYNC,
+            MessageTypesPanoviewer.MESSAGE_TYPE_VIEWSYNC, "panoviewer");
 
     /**
      * Handle Street View activation requests from websockets.
@@ -288,6 +256,25 @@ public class WebctlActivity extends BaseRoutableRosWebServerActivity {
       }
     });
   }
+
+  /**
+   * Registers a handler for forwarding messages from websockets to Ros.
+   * 
+   * @param handlers
+   *          the websocket handler registry
+   * @param type
+   *          the message type/channel
+   */
+  private void relayWebsocketToRos(WebsocketMessageHandlers handlers, final String ws_msg_type, final String ros_msg_type, final String channel) {
+    handlers.registerHandler(ws_msg_type, new WebsocketMessageHandler() {
+      public void handleMessage(String connectionId, JsonNavigator json) {
+        JsonBuilder message =
+            MessageWrapper.newTypedMessage(ros_msg_type, json.getCurrentItem());
+        sendOutputJsonBuilder(channel, message);
+      }
+    });
+  }
+
 
   /**
    * Sets up the <code>WebConfigHandler</code>.

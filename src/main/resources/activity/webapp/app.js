@@ -27,6 +27,7 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
  */
 .value('Apps', {
   StreetView: 'streetview',
+  PanoViewer: 'panoviewer',
   Earth: 'earth'
 })
 
@@ -34,6 +35,7 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
  * ActivityGroups are the names of activity groups for Apps.
  */
 .value('ActivityGroups', {
+  PanoViewer: IS.Configuration['lg.webctl.group.panoviewer'],
   StreetView: IS.Configuration['lg.webctl.group.streetview'],
   Earth: IS.Configuration['lg.webctl.group.earth']
 })

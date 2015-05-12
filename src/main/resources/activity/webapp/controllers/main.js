@@ -24,7 +24,7 @@
  * 
  * @author Matt Vollrath <matt@endpoint.com>
  */
-function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, MapModes, Planets, EarthMessages, StreetViewMessages, UIEvents, PoiService, AttractLoopService, MessageService) {
+function MainController($scope, $rootScope, $timeout, EarthService, StreetViewService, Apps, MapModes, Planets, EarthMessages, StreetViewMessages, UIEvents, PoiService, AttractLoopService, MessageService, PanoViewerService) {
   $scope.searching = false;
   $scope.zoom = null;
   $scope.planet = Planets.Earth;
@@ -67,8 +67,14 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     if (app == Apps.Earth) {
       EarthService.activate();
       StreetViewService.deactivate();
+      PanoViewerService.deactivate();
     } else if (app == Apps.StreetView) {
       StreetViewService.activate();
+      EarthService.deactivate();
+      PanoViewerService.deactivate();
+    } else if (app == Apps.PanoViewer) {
+      PanoViewerService.activate();
+      StreetViewService.deactivate();
       EarthService.deactivate();
     }
   });
