@@ -88,10 +88,14 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    */
   $scope.loadPano = function(panoData, heading) {
     // TODO: abstract number validation
-    if (!isNaN(parseFloat(heading)) && isFinite(heading)) {
-      StreetViewService.setPov({heading: heading, pitch: 0});
-    }
     StreetViewService.setPano(panoData.location.pano);
+
+    // XXX Hack -- this is an attempt to work around https://github.com/EndPointCorp/com.endpoint.lg.streetview.pano/issues/1
+    $timeout( function() {
+      if (!isNaN(parseFloat(heading)) && isFinite(heading)) {
+        StreetViewService.setPov({heading: heading, pitch: 0});
+      }
+    }, 200);
   }
 
   /**
