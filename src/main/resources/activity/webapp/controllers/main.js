@@ -94,10 +94,14 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
    */
   $scope.loadPano = function(panoData, heading) {
     // TODO: abstract number validation
-    if (!isNaN(parseFloat(heading)) && isFinite(heading)) {
-      StreetViewService.setPov({heading: heading, pitch: 0});
-    }
     StreetViewService.setPano(panoData.location.pano);
+
+    // XXX Hack -- this is an attempt to work around https://github.com/EndPointCorp/com.endpoint.lg.streetview.pano/issues/1
+    $timeout( function() {
+      if (!isNaN(parseFloat(heading)) && isFinite(heading)) {
+        StreetViewService.setPov({heading: heading, pitch: 0});
+      }
+    }, 200);
   }
 
   /**
@@ -116,6 +120,12 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     }
     if (typeof(t) !== 'undefined') {
       $timeout.cancel(l);
+    }
+
+    // If the attract loop started this transition, and if the attract loop has
+    // been stopped before we got to this point, don't finish the transition
+    if (poi.attractLoop && ! AttractLoopService.isAttractLoopRunning()) {
+        return;
     }
 
     $scope.loadPano(panoData, poi.heading);
