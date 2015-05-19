@@ -74,6 +74,7 @@ LiquidGalaxyApp.value('EarthMessages', {
   SetView: 'Earth.setView',
   SetPlanet: 'Earth.setPlanet',
   Search: 'Earth.search',
+  Startup: 'Earth service starting',
   ViewChanged: 'Earth.viewChanged'
 });
 

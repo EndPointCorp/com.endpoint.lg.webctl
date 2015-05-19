@@ -23,6 +23,7 @@ LiquidGalaxyApp.value('StreetViewMessages', {
   Deactivate: 'StreetView.deactivate',
   SetPano: 'StreetView.setPano',
   SetPov: 'StreetView.setPov',
+  Startup: 'Streetview service starting',
   PanoChanged: 'StreetView.panoChanged',
   PovChanged: 'StreetView.povChanged'
 });
