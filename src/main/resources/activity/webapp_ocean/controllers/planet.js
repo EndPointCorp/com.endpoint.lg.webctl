@@ -40,4 +40,8 @@ function PlanetController($scope, $rootScope, UIEvents, PoiService) {
     return 'images/' + p + (p == $scope.page ? '-bright.png' : '-dark.png');
   }
 
+  $rootScope.$on(UIEvents.Attract.GoToPoi, function($event, data) {
+    $scope.poi_diving = true;
+  });
+
 }
