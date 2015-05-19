@@ -63,7 +63,11 @@ function PoiController($scope, $rootScope, $sanitize, PoiService, UIEvents) {
   /**
    * Handlers for clearing the selection on external UI events.
    */
-  $rootScope.$on(UIEvents.MapMode.SelectMode, $scope.selectNone);
+  $rootScope.$on(UIEvents.MapMode.SelectMode, function(ev, arg) {
+    if (arg !== 'streetview') {
+      $scope.selectNone()
+    }
+  } );
   $rootScope.$on(UIEvents.Search.Query, $scope.selectNone);
 
   /**
