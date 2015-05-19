@@ -32,7 +32,7 @@
 
 @font-face {
   font-family: OpenSans;
-  src: url('../../webapp/fonts/opensans_regular.ttf');
+  src: url('../../fonts/opensans_regular.ttf');
 }
 
 html body {

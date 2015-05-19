@@ -13,7 +13,11 @@ Serves a web interface for the Liquid Galaxy.
       sourceDirectory="${project.home}/../activity-resources/web/js/is" />
     <resource destinationDirectory="webapp/fonts"
       sourceFile="${project.home}/../activity-resources/web/fonts/opensans_regular.ttf" />
+    <resource destinationDirectory="webapp_ocean/fonts"
+      sourceFile="${project.home}/../activity-resources/web/fonts/opensans_regular.ttf" />
     <resource destinationDirectory="webapp/images"
+      sourceDirectory="${project.home}/../activity-resources/web/images/webctl" />
+    <resource destinationDirectory="webapp_ocean/images"
       sourceDirectory="${project.home}/../activity-resources/web/images/webctl" />
     <resource destinationDirectory="webapp_ocean/lib"
       sourceDirectory="${project.home}/../activity-resources/web/js/is" />
