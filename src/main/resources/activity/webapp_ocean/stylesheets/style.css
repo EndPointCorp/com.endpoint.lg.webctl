@@ -330,22 +330,22 @@ video {
 
 #planet {
   position: absolute;
+  /*
   z-index: 2;
   top: 850px;
-  /*
   bottom: 33px;
-  */
   left: 1640px;
+  */
 }
 
 #planet>div {
   display: inline-block;
-  width: 91px;
+/*  width: 91px;
   height: 91px;
-  margin-left: 40px;
+  margin-left: 40px; */
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 87px 87px;
+  /* background-size: 87px 87px; */
   transition: background-image 0.25s ease-out;
 }
 

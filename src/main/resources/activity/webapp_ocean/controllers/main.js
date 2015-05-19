@@ -31,7 +31,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.mapMode = MapModes.Earth;
   $scope.activeApp = Apps.Earth;
   $scope.panoData = null;
-  $scope.poi_diving = false;
+  $scope.poi_diving = true;
 
   $scope.svSvc = new google.maps.StreetViewService();
 
@@ -59,6 +59,11 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.notifyClick = function() {
     $rootScope.$broadcast('body-click', {});
   }
+
+  $scope.changePage = function(diving) {
+    $scope.poi_diving = diving;
+    $rootScope.$broadcast(UIEvents.Poi.Diving, $scope.poi_diving);
+  };
 
   /**
    * Control the active app.

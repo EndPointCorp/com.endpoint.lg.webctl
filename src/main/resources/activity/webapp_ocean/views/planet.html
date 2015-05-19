@@ -1,5 +1,10 @@
-<div id="planet" ng-controller="PlanetController">
-   <div ng-click="selectPage('West')">
+<div id="ocean-planet" ng-controller="PlanetController" ng-show="poi_diving">
+<!--   <div ng-click="selectPage('West')">
      <img src="images/back_to_seaview.png" />
-   </div>
+   </div> -->
+  <div id="poi-buttons">
+    <img ng-click="selectPage('West')" ng-src="{{page_image('West')}}" />
+    <img ng-click="selectPage('East')" ng-src="{{page_image('East')}}" />
+  </div>
+
 </div>

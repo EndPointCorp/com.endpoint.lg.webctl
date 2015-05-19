@@ -81,7 +81,8 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
     SelectPage: 'Page.selectPage'
   },
   Poi: {
-    SelectPoi: 'Poi.selectPoi'
+    SelectPoi: 'Poi.selectPoi',
+    Diving: 'Poi.Diving'
   },
   Search: {
     Query: 'Search.query',

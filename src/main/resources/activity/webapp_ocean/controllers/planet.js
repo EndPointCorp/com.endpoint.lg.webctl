@@ -16,7 +16,7 @@
 
 /**
  * Controller for the Planet selector.
- * 
+ *
  * @author Matt Vollrath <matt@endpoint.com>
  */
 function PlanetController($scope, $rootScope, UIEvents, PoiService) {
@@ -30,9 +30,14 @@ function PlanetController($scope, $rootScope, UIEvents, PoiService) {
   setupPoiPages();
 
   /**
-   * Broadcast planet selections. 
+   * Broadcast planet selections.
    */
   $scope.selectPage = function(page) {
     $rootScope.$broadcast(UIEvents.Page.SelectPage, page);
   }
+
+  $scope.page_image = function(p) {
+    return 'images/' + p + (p == $scope.page ? '-bright.png' : '-dark.png');
+  }
+
 }

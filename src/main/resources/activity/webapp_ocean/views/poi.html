@@ -1,10 +1,5 @@
 <div id="poi" ng-controller="PoiController" ng-show="poi_diving">
 
-  <div id="poi-buttons">
-    <img ng-click="selectPage('West')" ng-src="{{page_image('West')}}" />
-    <img ng-click="selectPage('East')" ng-src="{{page_image('East')}}" />
-  </div>
-  
   <ul ng-class="planet">
     <li ng-repeat="poi in content" ng-class="[poi.style, 'seaview'+$index]" ng-click="selectPoi($index, poi)">
       <img ng-src="images/poi/{{poi.image}}" ng-class="{selected: $index==selectedIndex}" ng-show="poi.title" alt="{{poi.title}}"/>
@@ -14,9 +9,5 @@
   <video ng-class="poi_video" autoplay loop>
     <source src="images/buei_background.mp4" type="video/mp4" />
   </video>
-  
-  <div class="back-button">
-    <img id="back-to-free-fly" src="images/free-fly-button.png" ng-click="poi_diving = false" />
-  </div>
   
 </div>

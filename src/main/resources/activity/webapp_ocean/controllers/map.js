@@ -163,7 +163,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    * Returns true if the map canvas should be visible.
    */
   $scope.checkVisibility = function() {
-    return $scope.planet == Planets.Earth && !$scope.searching;
+    return $scope.planet == Planets.Earth && !$scope.searching && !$scope.poi_diving;
   }
 
   /**

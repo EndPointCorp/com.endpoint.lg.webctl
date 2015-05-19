@@ -30,10 +30,6 @@ function PoiController($scope, $rootScope, $sanitize, PoiService, UIEvents) {
     $scope.page = p;
     setupPoiContent();
   };
-
-  $scope.page_image = function(p) {
-    return 'images/' + p + (p == $scope.page ? '-bright.png' : '-dark.png');
-  }
     
   var setupPoiContent = function() {
       if (typeof(PoiService.content) !== 'undefined' && PoiService.content.hasOwnProperty($scope.page)) {
@@ -67,6 +63,10 @@ function PoiController($scope, $rootScope, $sanitize, PoiService, UIEvents) {
 
   $rootScope.$on(UIEvents.Attract.GoToPoi, function($event, data) {
     $scope.selectPoi(data.index, data.poi);
+  });
+
+  $rootScope.$on(UIEvents.Poi.Diving, function(ev, data) {
+    $scope.poi_diving = data;
   });
 
   /**
