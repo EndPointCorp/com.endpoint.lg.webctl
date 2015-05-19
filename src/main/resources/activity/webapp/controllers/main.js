@@ -189,7 +189,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     if (poi.hasOwnProperty('location') && poi.location.hasOwnProperty('latitude') && poi.location.hasOwnProperty('longitude')) {
       $scope.activeApp = Apps.Earth;
 
-      $timeout( transitionToStreetViewPano(thatPoi), 1000);
+      $timeout( function() { transitionToStreetViewPano(thatPoi) }, 1000);
     }
     else {
       console.log("Can't fly Earth to this poi, because it has no coordinate information");
