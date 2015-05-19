@@ -87,6 +87,9 @@ var LiquidGalaxyApp = angular.module('LiquidGalaxyApp', ['ngSanitize', 'IS.Maste
     Query: 'Search.query',
     Activated: 'Search.activated',
     Deactivated: 'Search.deactivated'
+  },
+  Attract: {
+    GoToPoi: 'Attract.gotoPoi'
   }
 })
 

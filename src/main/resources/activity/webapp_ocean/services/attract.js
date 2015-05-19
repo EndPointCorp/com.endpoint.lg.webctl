@@ -52,7 +52,8 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
         ignoreMsg = true;
         $timeout(function () { ignoreMsg = false; }, ignoreMsgInterval);
         poi.attractLoop = true;
-        $rootScope.$broadcast(UIEvents.Poi.SelectPoi, poi);
+        $rootScope.$broadcast(UIEvents.Page.SelectPage, poiPages[poiPage].name);
+        $rootScope.$broadcast(UIEvents.Attract.GoToPoi, {index: poiIndex, poi: poi});
         nextPointTimer = $timeout(nextPoint, attractPointDelay);
     }
 

@@ -53,6 +53,10 @@ function PoiController($scope, $rootScope, $sanitize, PoiService, UIEvents) {
     $scope.selectedIndex = $index;
   }
 
+  $rootScope.$on(UIEvents.Attract.GoToPoi, function($event, data) {
+    $scope.selectPoi(data.index, data.poi);
+  });
+
   /**
    * Clears the selection.
    */
