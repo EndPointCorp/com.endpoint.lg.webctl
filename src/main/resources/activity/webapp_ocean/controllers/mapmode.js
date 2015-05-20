@@ -40,7 +40,7 @@ function MapModeController($scope, $rootScope, MapConfig, MapModes, Planets, Str
    * Returns true if the mode selector should be visible.
    */
   $scope.checkVisibility = function() {
-      return $scope.planet == Planets.Earth && !$scope.searching; // && ($scope.mode == MapModes.StreetView || $scope.zoom >= MapConfig.MinStreetViewZoomLevel);
+      return $scope.planet == Planets.Earth && !$scope.searching && ($scope.mode == MapModes.StreetView || $scope.zoom >= MapConfig.MinStreetViewZoomLevel);
   }
 
   /**
