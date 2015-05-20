@@ -32,7 +32,7 @@
 
 @font-face {
   font-family: OpenSans;
-  src: url('../../fonts/opensans_regular.ttf');
+  src: url('../fonts/opensans_regular.ttf');
 }
 
 html body {
@@ -227,9 +227,9 @@ video {
   background-image: url('../images/outdoor.png');
 }
 
-.ocean {
+/* .ocean {
   background-image: url('../images/ocean.png');
-}
+}*/
 
 .street {
   background-image: url('../images/street_view.png');
