@@ -184,7 +184,7 @@ video {
 }
 
 #poi>ul>li>img.selected {
-    box-shadow: 0 0 12px #000ffff;
+    -webkit-filter: drop-shadow(0 0 30px rgba(229, 229, 28, .7));
 }
 
 #poi-buttons {
