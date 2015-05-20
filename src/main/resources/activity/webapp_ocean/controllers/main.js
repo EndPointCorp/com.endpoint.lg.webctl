@@ -63,6 +63,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.changePage = function(diving) {
     $scope.poi_diving = diving;
     $rootScope.$broadcast(UIEvents.Poi.Diving, $scope.poi_diving);
+    $rootScope.$broadcast(UIEvents.MapMode.SelectMode, 'earth');
   };
 
   /**
