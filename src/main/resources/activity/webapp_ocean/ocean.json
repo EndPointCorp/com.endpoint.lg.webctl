@@ -1,7 +1,7 @@
 { "West": {
     "planet" : "earth",
     "points" : [
-      { "style": "ocean", "title": "Emily's Pinnacles, Bermuda", "type": "streetview", "panoid": "JTkIzW2WgsAAAAQJOJIx9A", "location": { "latitude": "32.235303", "longitude": "64.84837099999999" }, "heading": "140" },
+      { "style": "ocean", "title": "Emily's Pinnacles, Bermuda", "type": "streetview", "panoid": "JTkIzW2WgsAAAAQJOJIx9A", "location": { "latitude": "32.235303", "longitude": "-64.84837099999999" }, "heading": "140" },
       { "style": "ocean", "title": "Hourglass Reef, Bermuda", "type": "streetview", "panoid": "3keLwG0w2s4AAAQJOJIuOg", "location": { "latitude": "32.347161", "longitude": "-64.6499" }, "heading": "1" },
       { "style": "ocean", "title": "Mary Celeste Wreck, Bermuda", "type": "streetview", "panoid": "i1i4NPuJaqkAAAQJOJMqGw", "location": { "latitude": "32.242052", "longitude": "-64.831613" }, "heading": "185" },
       { "style": "ocean", "title": "North East Breaker, Bermuda", "type": "streetview", "panoid": "PkL4Nl8xqLgAAAQJOJI4ug", "location": { "latitude": "32.483174", "longitude": "-64.68519000000003" }, "heading": "307" },
