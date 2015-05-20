@@ -98,7 +98,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     // XXX Hack -- this is an attempt to work around https://github.com/EndPointCorp/com.endpoint.lg.streetview.pano/issues/1
     $timeout( function() {
       if (!isNaN(parseFloat(heading)) && isFinite(heading)) {
-        StreetViewService.setPov({heading: heading, pitch: 0});
+        StreetViewService.setPov({heading: parseFloat(heading), pitch: 0});
       }
     }, 200);
   }
