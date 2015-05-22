@@ -44,4 +44,8 @@ function PlanetController($scope, $rootScope, UIEvents, PoiService) {
     $scope.poi_diving = true;
   });
 
+  $rootScope.$on(UIEvents.Poi.Diving, function(ev, data) {
+    $scope.poi_diving = data;
+  });
+
 }

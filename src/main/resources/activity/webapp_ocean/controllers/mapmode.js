@@ -20,12 +20,14 @@
  * @author Matt Vollrath <matt@endpoint.com>
  */
 function MapModeController($scope, $rootScope, MapConfig, MapModes, Planets, StreetViewMessages, UIEvents) {
+  $scope.mode = MapModes.Earth;
 
   /**
    * Broadcasts the selected mode.
    */
   $scope.selectMode = function(mode) {
     $rootScope.$broadcast(UIEvents.MapMode.SelectMode, mode);
+    $scope.mode = mode;
   }
 
   /**
