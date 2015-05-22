@@ -171,7 +171,7 @@ function MapController($scope, $rootScope, $timeout, MapConfig, MapStyles, Apps,
    * TODO: refactor altitude to zoom conversion
    * TODO: refactor viewsync to latLng conversion
    */
-  $scope.$on(EarthMessages.ViewChanged, function($event, viewsyncData) {
+  $rootScope.$on(EarthMessages.ViewChanged, function($event, viewsyncData) {
     if ($scope.activeApp != Apps.Earth || $scope.mapTakeover) return;
 
     var altitude = viewsyncData.altitude;
