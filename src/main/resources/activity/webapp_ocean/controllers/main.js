@@ -33,6 +33,8 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   $scope.panoData = null;
   $scope.poi_diving = true;
 
+  var transitionTimeout;
+
   $scope.svSvc = new google.maps.StreetViewService();
 
   /**
@@ -65,6 +67,10 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     $rootScope.$broadcast(UIEvents.Poi.Diving, $scope.poi_diving);
     $rootScope.$broadcast(UIEvents.MapMode.SelectMode, 'earth');
   };
+
+  $rootScope.$on(UIEvents.Poi.Diving, function(ev, data) {
+    $scope.poi_diving = data;
+  });
 
   /**
    * Control the active app.
@@ -134,7 +140,7 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
   var transitionToStreetViewPano = function(poi) {
     var panoData;
     var found = false, error = false;
-    var deregisterListener, timeout;
+    var deregisterListener;
     var marginOfError = 0.3; // When Earth gets within this many degrees of its target, we'll switch to street view
                                                         // X * 1 makes 'em numbers, not strings
     var earthQuery = EarthService.generateGroundView(poi.location.latitude * 1, poi.location.longitude * 1, 500);
@@ -160,16 +166,16 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
         console.log("We're close enough!");
         console.log(poi.location);
         console.log(coords);
-        arrivedAtStreetViewPano(deregisterListener, timeout, found, error, panoData, poi);
+        arrivedAtStreetViewPano(deregisterListener, transitionTimeout, found, error, panoData, poi);
       }
     });
 
     // In case we never get there, eventually switch to street view anyway
-    timeout = $timeout(function() {
+    transitionTimeout = $timeout(function() {
       // Switch to street view if we haven't already
       if ($scope.activeApp !== Apps.StreetView) {
         console.log("We haven't switched to street view yet; do it now");
-        arrivedAtStreetViewPano(deregisterListener, timeout, found, error, panoData, poi);
+        arrivedAtStreetViewPano(deregisterListener, transitionTimeout, found, error, panoData, poi);
       }
     }, 10000);
   }
@@ -189,6 +195,9 @@ function MainController($scope, $rootScope, $timeout, EarthService, StreetViewSe
     if (poi.hasOwnProperty('location') && poi.location.hasOwnProperty('latitude') && poi.location.hasOwnProperty('longitude')) {
       $scope.activeApp = Apps.Earth;
 
+      if (typeof(transitionTimeout) !== 'undefined') {
+        $timeout.cancel(transitionTimeout);
+      }
       $timeout( function() { transitionToStreetViewPano(thatPoi) }, 1000);
     }
     else {
