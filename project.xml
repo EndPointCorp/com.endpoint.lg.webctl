@@ -4,7 +4,6 @@
   <description>
 Serves a web interface for the Liquid Galaxy.
   </description>
-
   <identifyingName>com.endpoint.lg.webctl</identifyingName>
   <version>1.0.1</version>
 
