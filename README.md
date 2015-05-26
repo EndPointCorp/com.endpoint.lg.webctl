@@ -5,7 +5,7 @@ Java package: com.endpoint.lg.webctl
 
 Web interface that controls the rest of a Liquid Galaxy powered by Interactive Spaces.
 
-Copyright (C) 2014 Google Inc.  
+Copyright (C) 2014 Google Inc.
 Copyright (C) 2015 End Point Corporation
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
