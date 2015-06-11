@@ -7,6 +7,35 @@ Serves a web interface for the Liquid Galaxy.
   <identifyingName>com.endpoint.lg.webctl</identifyingName>
   <version>1.0.1</version>
 
+  <activity type="interactivespaces_native">
+    <name>comEndpointLgWebctl</name>
+    <class>com.endpoint.lg.webctl.WebctlActivity</class>
+    <configuration>
+      <property name="space.activity.log.level"><value>info</value></property>
+      <property name="space.activity.webapp.content.location"><value>webapp</value></property>
+      <property name="space.activity.webapp.url.initial"><value>index.html</value></property>
+      <property name="space.activity.webapp.browser.debug"><value>false</value></property>
+      <property name="space.activity.webapp.web.server.port"><value>8999</value></property>
+      <property name="lg.master.api.uri"><value>http://localhost:8080/interactivespaces</value></property>
+      <property name="lg.webctl.group.earth"><value>Google Earth</value></property>
+      <property name="lg.webctl.group.streetview"><value>Google Street View</value></property>
+      <property name="lg.webctl.group.panoviewer"><value>Panoramic Image Viewers</value></property>
+      <property name="space.activity.ros.node.name"><value>liquidgalaxy/webctl/${space.activity.group}</value></property>
+      <property name="space.activity.routes.inputs"><value>pov:pano:earthpos:spacenav</value></property>
+      <property name="space.activity.route.input.pov"><value>/liquidgalaxy/${space.activity.group}/streetview/pov</value></property>
+      <property name="space.activity.route.input.pano"><value>/liquidgalaxy/${space.activity.group}/streetview/pano</value></property>
+      <property name="space.activity.route.input.earthpos"><value>/liquidgalaxy/${space.activity.group}/earth/viewsync</value></property>
+      <property name="space.activity.route.input.spacenav"><value>/liquidgalaxy/${space.activity.group}/evdev/default/raw</value></property>
+      <property name="space.activity.routes.outputs"><value>pov:pano:query:panoviewer</value></property>
+      <property name="space.activity.route.output.pov"><value>/liquidgalaxy/${space.activity.group}/streetview/pov</value></property>
+      <property name="space.activity.route.output.pano"><value>/liquidgalaxy/${space.activity.group}/streetview/pano</value></property>
+      <property name="space.activity.route.output.query"><value>/liquidgalaxy/${space.activity.group}/earth/query</value></property>
+      <property name="space.activity.route.output.panoviewer"><value>/liquidgalaxy/${space.activity.group}/panoviewer/viewsync</value></property>
+      <!-- URL to retrieve JSON of points of interest -->
+      <property name="poi.json.url"><value>http://127.0.0.1:8999/comEndpointLgWebctl/test.json</value></property>
+    </configuration>
+  </activity>
+
   <resources>
     <resource destinationDirectory="webapp/lib"
       sourceDirectory="${project.home}/../activity-resources/web/js/is" />
