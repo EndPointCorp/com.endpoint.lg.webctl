@@ -11,6 +11,7 @@ Serves a web interface for the Liquid Galaxy.
     <name>comEndpointLgWebctl</name>
     <class>com.endpoint.lg.webctl.WebctlActivity</class>
     <configuration>
+      <property name="space.activity.group"><value>generic</value></property>
       <property name="space.activity.log.level"><value>info</value></property>
       <property name="space.activity.webapp.content.location"><value>webapp</value></property>
       <property name="space.activity.webapp.url.initial"><value>index.html</value></property>
