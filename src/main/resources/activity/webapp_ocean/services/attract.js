@@ -46,7 +46,8 @@ LiquidGalaxyApp.service('AttractLoopService', function($rootScope, UIEvents, $ti
         }
         prevPage = poiPage;
         prevPoiIndex = poiIndex;
-        var poi = poiContent[poiPages[poiPage].name].points[poiIndex];
+        var poiOriginal = poiContent[poiPages[poiPage].name].points[poiIndex];
+        var poi = JSON.parse(JSON.stringify(poiOriginal)); // copy POI Issue#17
 
         console.log("Attract loop moving to new POI: " + JSON.stringify(poi));
         ignoreMsg = true;
