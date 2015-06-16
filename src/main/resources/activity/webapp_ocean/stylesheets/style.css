@@ -183,9 +183,9 @@ video {
   transition: box-shadow 0.25s ease-out;
 }
 
-#poi>ul>li>img.selected {
+/*#poi>ul>li>img.selected {
     -webkit-filter: drop-shadow(0 0 30px rgba(229, 229, 28, .7));
-}
+}*/
 
 #poi-buttons {
   width: 1200px;
