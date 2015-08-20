@@ -33,7 +33,7 @@ Serves a web interface for the Liquid Galaxy.
       <property name="space.activity.route.output.query"><value>/liquidgalaxy/${space.activity.group}/earth/query</value></property>
       <property name="space.activity.route.output.panoviewer"><value>/liquidgalaxy/${space.activity.group}/panoviewer/viewsync</value></property>
       <!-- URL to retrieve JSON of points of interest -->
-      <property name="poi.json.url"><value>http://127.0.0.1:8999/comEndpointLgWebctl/test.json</value></property>
+      <property name="poi.json.url"><value>orig.json</value></property>
     </configuration>
   </activity>
 
