@@ -1,7 +1,12 @@
 { "Earth": {
     "planet" : "earth",
     "points" : [
-    { "style": "outdoor", "title": "Grand Canyon Pano", "type": "panoviewer", "pano_type": "image", "fileurl": "http://localhost:8082/grand-canyon-pano.jpg" },
+    { "style": "indoor", "title": "State Dining Room,<br />The White House", "type": "streetview", "panoid": "I5NDPRik49udZwxm4LYdCQ", "heading": 90,
+      "location": {
+        "longitude": -77.0365038,
+        "latitude": 38.8977664
+      }
+    },
     { "style": "outdoor", "title": "Tower of Pisa, Pisa", "type": "earth", "abstractView": {
       "type": "lookat",
       "location": {
@@ -30,8 +35,18 @@
       },
       "altitudeMode": "relativeToGround"
     } },
-    { "style": "street", "title": "Sunset Boulevard, Los Angeles", "type": "streetview", "panoid": "o4yrNps7LEEGNTssM-xiDg", "heading": 50 },
-    { "style": "ocean", "title": "Heron Island, Great Barrier Reef", "type": "streetview", "panoid": "CWskcsTEZBNXaD8gG-zATA", "heading": -25 },
+    { "style": "street", "title": "Sunset Boulevard, Los Angeles", "type": "streetview", "panoid": "o4yrNps7LEEGNTssM-xiDg", "heading": 50,
+      "location": {
+        "longitude": -118.3806005,
+        "latitude": 34.0918715
+      }
+    },
+    { "style": "ocean", "title": "Heron Island, Great Barrier Reef", "type": "streetview", "panoid": "CWskcsTEZBNXaD8gG-zATA", "heading": -25,
+      "location": {
+        "latitude": -23.4423162,
+        "longitude": 151.9150153
+      }
+    },
     { "style": "outdoor", "title": "Stonehenge, Wiltshire", "type": "earth", "abstractView": {
       "type": "camera",
       "location": {
@@ -60,7 +75,12 @@
       },
       "altitudeMode": "relativeToSeaFloor"
     } },
-    { "style": "indoor", "title": "Opera House, Sydney", "type": "streetview", "panoid": "yr58FW-eQtEAAAQW4fRy2g", "heading": 180 },
+    { "style": "indoor", "title": "Opera House, Sydney", "type": "streetview", "panoid": "yr58FW-eQtEAAAQW4fRy2g", "heading": 180,
+      "location": {
+        "latitude": -33.856898,
+        "longitude": 151.2152806
+      }
+    },
     { "style": "outdoor", "title": "The Grand Canyon, Arizona", "type": "earth", "abstractView": {
       "type": "lookat",
       "location": {
@@ -75,7 +95,12 @@
       },
       "altitudeMode": "relativeToGround"
     } },
-    { "style": "ocean", "title": "Playful Sea Lions, Galapagos", "type": "streetview", "panoid": "0yfJCnICQIUAAAQIt--IJw", "heading": 54 }
+    { "style": "ocean", "title": "Playful Sea Lions, Galapagos", "type": "streetview", "panoid": "0yfJCnICQIUAAAQIt--IJw", "heading": 54,
+      "location": {
+        "latitude": -0.5663278,
+        "longitude": -90.1408786
+      }
+    }
   ]},
   "Moon": {
     "planet" : "moon",
